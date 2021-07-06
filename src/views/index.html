@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="UTF-8">
+    <title>Lands-Co</title>
+    <link rel="stylesheet" href="../styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+<div class="window-content main-window direction-rtl pt-3 d-flex flex-column">
+    <div class="app-logo d-flex align-items-center">
+        <div>
+            <h6 class="dm-h pt-1 pl-1">جهاز مشروعات أراضى القوات المسلحة</h6>
+            <h6 class="dm-h pt-1 pl-1">فرع نظم المعلومات</h6>
+        </div>
+        <i ondblclick="developerToast()"><img src="../assets/lands-logo.png" alt="" width="70"></i>
+    </div>
+    <div class="row m-0">
+        <div class="col-4">
+            <div class="div d-flex">
+                <i class="round-icon exit-btn" style="padding-bottom: 2px" onclick="minimizeWindowToTray()"><img
+                        src="../assets/close.png" width="12"
+                        height="12" alt=""></i>
+<!--                <div class="mx-1"></div>-->
+<!--                <i class="round-icon mini-btn" style="padding-right: 2px" onclick="minimizeWindow()"><img-->
+<!--                        src="../assets/minimize.png" width="14" height="14" alt=""></i>-->
+                <div class="mx-1"></div>
+                <i id="dark-mode-toggle" class="round-icon dark-mode-btn"><img id="dark-mode-btn-img"
+                                                                               src="../assets/sun.png" width="16"
+                                                                               height="16" alt=""></i>
+<!--                <div class="mx-1"></div>-->
+<!--                <i class="round-icon mini-btn" style="padding-right: 2px" onclick="openAboutWindow()"><img-->
+<!--                        src="../assets/info.png" width="14" height="14" alt=""></i>-->
+            </div>
+        </div>
+    </div>
+    <div class="row mt-5 mx-1 mb-2 direction-ltr flex-grow-1">
+        <div class="col card-awesome card-darken d-flex flex-column">
+            <canvas id="football-riv" width="120" height="120" class="m-2 align-self-center"></canvas>
+            <div class="card-awesome-content flex-grow-1 d-flex flex-column justify-content-between"
+                 style="margin-top: 9px">
+                <h6 class="dm-h"></h6>
+                <div>
+                    <h6 class="dm-h">مباريات اليوم</h6>
+                    <hr class="hr-awesome">
+                </div>
+                <div class="dm-h d-flex flex-column justify-content-between mt-1 lock-height" id="football-content">
+
+                </div>
+                <div class="flex-grow-1"></div>
+                <button class="btn-shadow" onclick="showDetailScreen('football')">تفاصيل أكتر</button>
+            </div>
+        </div>
+        <div class="col card-awesome d-flex flex-column">
+            <object data="../assets/corona.svg" type="image/svg+xml" width="120" height="120"
+                    class="m-2 align-self-center"></object>
+            <div class="card-awesome-content d-flex flex-column flex-grow-1"
+                 style="margin-top: 9px">
+                <div>
+                    <h6 class="dm-h">الكورونا</h6>
+                    <hr class="hr-awesome">
+                </div>
+                <div class="dm-h text-right d-flex flex-column justify-content-between mt-2">
+                    <div class="box-awesome text-right">
+                        <h6 class="dm-h fs-15 my-1"><img src="../assets/new.png" alt="" width="16" height="16"
+                                                         class="ml-1"> الجديدة </h6>
+                        <hr class="hr-awesome-right">
+                        <h6 class="dm-h fs-14 my-1 highlight-h">- إصابات: <span id="todayCases"></span></h6>
+                        <h6 class="dm-h fs-14 my-1 highlight-h">- وفيات: <span id="todayDeath"></span></h6>
+                        <h6 class="dm-h fs-14 my-1 highlight-h">- متعافين: <span id="todayRecovered"></span></h6>
+                    </div>
+                    <div class="box-awesome text-right mt-2">
+                        <h6 class="dm-h fs-15 my-1"><img src="../assets/grid.png" alt="" width="16" height="16"
+                                                         class="ml-1"> الإجمالى </h6>
+                        <hr class="hr-awesome-right">
+                        <h6 class="dm-h fs-14 my-1 highlight-h">- إصابات: <span id="allCases"></span></h6>
+                        <h6 class="dm-h fs-14 my-1 highlight-h">- وفيات: <span id="allDeaths"></span></h6>
+                        <h6 class="dm-h fs-14 my-1 highlight-h">- متعافين: <span id="allRecovered"></span></h6>
+                    </div>
+                </div>
+                <div class="flex-grow-1"></div>
+                <button class="btn-shadow" onclick="showDetailScreen('corona')">تفاصيل أكتر</button>
+            </div>
+        </div>
+        <div class="col card-awesome card-darken d-flex flex-column">
+            <object data="../assets/currency.svg" type="image/svg+xml" width="120" height="120"
+                    class="m-2 align-self-center"></object>
+            <div class="card-awesome-content flex-grow-1 d-flex flex-column justify-content-between"
+                 style="margin-top: 9px">
+                <div>
+                    <h6 class="dm-h">أسعار العملات</h6>
+                    <hr class="hr-awesome">
+                </div>
+                <div class="dm-h text-right d-flex flex-column justify-content-between mt-1" id="currency-content">
+
+                </div>
+                <div class="flex-grow-1"></div>
+                <button class="btn-shadow" onclick="noMoreData()">تفاصيل أكتر</button>
+            </div>
+        </div>
+        <div class="col card-awesome position-relative d-flex justify-content-center">
+            <div class="icon sun-shower align-self-center">
+                <div class="cloud"></div>
+                <div class="sun">
+                    <div class="rays"></div>
+                </div>
+                <div class="rain"></div>
+            </div>
+            <div class="card-awesome-content flex-grow-1 d-flex flex-column justify-content-between"
+                 style="margin-top: 145px">
+                <div>
+                    <h6 class="dm-h">الطقس</h6>
+                    <hr class="hr-awesome">
+                </div>
+                <div class="dm-h text-right d-flex flex-column justify-content-between">
+                    <div class="weather-card mt-2 text-center">
+                        <h6 class="dm-h"><img src="../assets/clock.png" alt="" width="16" height="16" class="ml-1">
+                            اليوم </h6>
+                        <hr class="hr-awesome">
+                        <img src="../assets/weather/01d.png" alt="" width="50" class="m-2" id="today-weather-icon">
+                        <h3 class="dm-h my-1" id="today-temp">
+                            <sub> 0° / </sub> 0°
+                        </h3>
+                        <h6 class="dm-h fs-14 my-1" id="today-description">سماء صافية</h6>
+                        <div class="card-awesome m-0 d-flex align-items-center">
+                            <img src="../assets/weather/sunrise.png" alt="" width="36" height="36" class="mx-1">
+                            <div class="mx-1 text-right">
+                                <h6 class="dm-h fs-15 my-1 direction-ltr" id="today-sunrise">00:00</h6>
+                                <h6 class="dm-h fs-12 my-1">شروق الشمس</h6>
+                            </div>
+                        </div>
+                        <div class="card-awesome m-0 mt-1 d-flex align-items-center">
+                            <img src="../assets/weather/sunset.png" alt="" width="36" height="36" class="mx-1">
+                            <div class="mx-1 text-right">
+                                <h6 class="dm-h fs-15 my-1 direction-ltr" id="today-sunset">00:00</h6>
+                                <h6 class="dm-h fs-12 my-1">غروب الشمس</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-grow-1"></div>
+                <button class="btn-shadow" onclick="showDetailScreen('weather')">تفاصيل أكتر</button>
+            </div>
+        </div>
+        <div class="col card-awesome card-darken d-flex flex-column">
+            <canvas id="mosque-riv" width="120" height="120" class="m-2 align-self-center"></canvas>
+            <div class="card-awesome-content flex-grow-1 d-flex flex-column justify-content-between"
+                 style="margin-top: 9px">
+                <div>
+                    <h6 class="dm-h">مواقيت الصلاة</h6>
+                    <hr class="hr-awesome">
+                </div>
+                <div class="dm-h text-right d-flex flex-column justify-content-between mt-1">
+                    <div class="d-flex mt-1">
+                        <div class="col box-awesome mr-1">
+                            <h6 class="dm-h p-1 direction-ltr text-center" id="fajr-time">00:00</h6>
+                        </div>
+                        <div class="col box-awesome flex-grow-1">
+                            <h6 class="dm-h p-1 fs-15"><img src="../assets/clock.png" alt="" width="16" height="16"
+                                                            class="ml-1"> الفجر </h6>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-1">
+                        <div class="col box-awesome mr-1">
+                            <h6 class="dm-h p-1 direction-ltr text-center" id="dhuhr-time">00:00</h6>
+                        </div>
+                        <div class="col box-awesome flex-grow-1">
+                            <h6 class="dm-h p-1 fs-15"><img src="../assets/clock.png" alt="" width="16" height="16"
+                                                            class="ml-1"> الظهر </h6>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-1">
+                        <div class="col box-awesome mr-1">
+                            <h6 class="dm-h p-1 direction-ltr text-center" id="asr-time">00:00</h6>
+                        </div>
+                        <div class="col box-awesome flex-grow-1">
+                            <h6 class="dm-h p-1 fs-15"><img src="../assets/clock.png" alt="" width="16" height="16"
+                                                            class="ml-1"> العصر </h6>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-1">
+                        <div class="col box-awesome mr-1">
+                            <h6 class="dm-h p-1 direction-ltr text-center" id="maghrib-time">00:00</h6>
+                        </div>
+                        <div class="col box-awesome flex-grow-1">
+                            <h6 class="dm-h p-1 fs-15"><img src="../assets/clock.png" alt="" width="16" height="16"
+                                                            class="ml-1"> المغرب </h6>
+                        </div>
+                    </div>
+                    <div class="d-flex mt-1">
+                        <div class="col box-awesome mr-1">
+                            <h6 class="dm-h p-1 direction-ltr text-center" id="isha-time">00:00</h6>
+                        </div>
+                        <div class="col box-awesome flex-grow-1">
+                            <h6 class="dm-h p-1 fs-15"><img src="../assets/clock.png" alt="" width="16" height="16"
+                                                            class="ml-1"> العشاء </h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-grow-1"></div>
+                <button class="btn-shadow" onclick="openNotifyWindow()">تفاصيل أكتر</button>
+            </div>
+        </div>
+    </div>
+    <div id="snackbar"></div>
+</div>
+<script src="../scripts/utils.js"></script>
+<script src="../controllers/index.controller.js"></script>
+<script>
+    $('img').on('dragstart', function(event) { event.preventDefault(); });
+</script>
+</body>
+</html>

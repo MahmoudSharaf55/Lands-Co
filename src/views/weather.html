@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="UTF-8">
+    <title>Weather Details</title>
+    <link rel="stylesheet" href="../styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+<div class="window-content detail-window weather-detail-window direction-rtl pt-3 d-flex flex-column">
+    <div class="row m-0">
+        <div class="col-4">
+            <i class="round-icon exit-btn" style="padding-bottom: 2px" onclick="closeWindow()"><img
+                    src="../assets/close.png" width="12"
+                    height="12" alt=""></i>
+        </div>
+    </div>
+    <div class="flex-grow-1 m-1">
+        <div class="row m-3 text-center">
+            <div class="col text-right">
+                <h4 class="text-white my-1">مدينة نصر، الحى السابع</h4>
+                <h6 class="text-white my-1" id="today-weather-date">الجمعة، 00 يناير ,0000</h6>
+                <img src="../assets/weather/01d.png" alt="" class="my-1" width="70" id="today-weather-icon">
+                <h5 class="text-white my-1" id="today-description">سماء صافية</h5>
+                <div class="row">
+                    <div class="col weather-widget d-flex align-items-center">
+                        <img src="../assets/humidity.png" alt="" width="36" height="36" class="mx-1">
+                        <div class="mx-1 text-right">
+                            <h6 class="text-white fs-15 my-1 direction-ltr" id="today-humidity">00%</h6>
+                            <h6 class="text-white fs-12 my-1">الرطوبة</h6>
+                        </div>
+                    </div>
+                    <div class="col weather-widget d-flex align-items-center mx-2">
+                        <img src="../assets/weather/sunrise.png" alt="" width="36" height="36" class="mx-1">
+                        <div class="mx-1 text-right">
+                            <h6 class="text-white fs-15 my-1 direction-ltr" id="today-sunrise">00:00</h6>
+                            <h6 class="text-white fs-12 my-1">شروق الشمس</h6>
+                        </div>
+                    </div>
+                    <div class="col weather-widget d-flex">
+                        <img src="../assets/weather/sunset.png" alt="" width="36" height="36" class="mx-1">
+                        <div class="mx-1 text-right">
+                            <h6 class="text-white fs-15 my-1 direction-ltr" id="today-sunset">00:00</h6>
+                            <h6 class="text-white fs-12 my-1">غروب الشمس</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col mt-3">
+                <div class="d-flex justify-content-center">
+                    <h1 class="text-white my-1 degree-symbol">°</h1>
+                    <h1 class="text-white my-1 weather-degree" id="today-temp">00</h1>
+                </div>
+                <div class="">
+                    <h3 class="text-white my-1 direction-ltr weather-degree-sm" id="today-min-max-temp">00° / 00°</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row m-3 mt-5" id="weather-timeline-content">
+
+        </div>
+    </div>
+</div>
+<script src="../scripts/utils.js"></script>
+<script src="../controllers/weather.controller.js"></script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <meta charset="UTF-8">
+    <title>Corona Details</title>
+    <link rel="stylesheet" href="../styles/bootstrap.min.css">
+    <link rel="stylesheet" href="../styles/table-style.css">
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+<div class="window-content detail-window direction-rtl pt-3 d-flex flex-column">
+    <div class="row m-0">
+        <div class="col-4">
+            <i class="round-icon exit-btn" style="padding-bottom: 2px" onclick="closeWindow()"><img
+                    src="../assets/close.png" width="12"
+                    height="12" alt=""></i>
+        </div>
+    </div>
+    <div class="detail-title d-flex justify-content-center">
+        <h5 class="dm-h pt-1 pl-1">الكورونا</h5>
+    </div>
+    <div>
+        <hr class="hr-awesome mt-2">
+    </div>
+    <div class="flex-grow-1 m-1">
+        <div class="row">
+            <div class="col">
+                <h6 class="dm-h my-1 text-right"><img src="../assets/new.png" alt="" width="20" height="20"
+                                                      class="ml-1"> الحالات الجديدة فى مصر </h6>
+                <hr class="hr-awesome-right w-50">
+                <div class="row">
+                    <div class="col gradient-awesome text-right mx-1">
+                        <h6 class="dm-h fs-14 my-1">المصابين</h6>
+                        <h5 class="dm-h my-1 text-center font-weight-bold" id="egypt-today-cases"></h5>
+                    </div>
+                    <div class="col gradient-awesome text-right mx-1">
+                        <h6 class="dm-h fs-14 my-1">الوفيات</h6>
+                        <h5 class="dm-h my-1 text-center font-weight-bold" id="egypt-today-deaths"></h5>
+                    </div>
+                    <div class="col gradient-awesome text-right mx-1">
+                        <h6 class="dm-h fs-14 my-1">المتعافين</h6>
+                        <h5 class="dm-h my-1 text-center font-weight-bold" id="egypt-today-recovered"></h5>
+                    </div>
+                </div>
+                <h6 class="dm-h mt-4 my-1 text-right"><img src="../assets/grid.png" alt="" width="20" height="20"
+                                                           class="ml-1"> إجمالى الحالات فى مصر </h6>
+                <hr class="hr-awesome-right w-50">
+                <div class="row">
+                    <div class="col gradient-awesome text-right mx-1">
+                        <h6 class="dm-h fs-14 my-1">المصابين</h6>
+                        <h5 class="dm-h my-1 text-center font-weight-bold" id="egypt-total-cases"></h5>
+                    </div>
+                    <div class="col gradient-awesome text-right mx-1">
+                        <h6 class="dm-h fs-14 my-1">الوفيات</h6>
+                        <h5 class="dm-h my-1 text-center font-weight-bold" id="egypt-total-deaths"></h5>
+                    </div>
+                    <div class="col gradient-awesome text-right mx-1">
+                        <h6 class="dm-h fs-14 my-1">المتعافين</h6>
+                        <h5 class="dm-h my-1 text-center font-weight-bold" id="egypt-total-recovered"></h5>
+                    </div>
+                </div>
+                <h6 class="dm-h mt-4 my-1 text-right"><img src="../assets/statistics.png" alt="" width="20" height="20"
+                                                           class="ml-1"> إحصائيات أخر 4 أيام فى مصر </h6>
+                <hr class="hr-awesome-right w-50">
+                <div class="row">
+                    <canvas id="line-chart"></canvas>
+                </div>
+            </div>
+            <div class="col">
+                <h6 class="dm-h my-1 text-right"><img src="../assets/world.png" alt="" width="20" height="20"
+                                                      class="ml-1"> الحالات الجديدة فى العالم </h6>
+                <hr class="hr-awesome-right w-50">
+                <div class="row">
+                    <div class="col gradient-awesome text-right mx-1">
+                        <h6 class="dm-h fs-14 my-1">المصابين</h6>
+                        <h5 class="dm-h my-1 text-center font-weight-bold" id="world-today-cases"></h5>
+                    </div>
+                    <div class="col gradient-awesome text-right mx-1">
+                        <h6 class="dm-h fs-14 my-1">الوفيات</h6>
+                        <h5 class="dm-h my-1 text-center font-weight-bold" id="world-today-deaths"></h5>
+                    </div>
+                    <div class="col gradient-awesome text-right mx-1">
+                        <h6 class="dm-h fs-14 my-1">المتعافين</h6>
+                        <h5 class="dm-h my-1 text-center font-weight-bold" id="world-today-recovered"></h5>
+                    </div>
+                </div>
+                <h6 class="dm-h mt-4 my-1 text-right"><img src="../assets/world.png" alt="" width="20" height="20"
+                                                           class="ml-1"> إجمالى الحالات فى العالم </h6>
+                <hr class="hr-awesome-right w-50">
+                <div class="row">
+                    <div class="col gradient-awesome text-right mx-1">
+                        <h6 class="dm-h fs-14 my-1">المصابين</h6>
+                        <h5 class="dm-h my-1 text-center font-weight-bold" id="world-total-cases"></h5>
+                    </div>
+                    <div class="col gradient-awesome text-right mx-1">
+                        <h6 class="dm-h fs-14 my-1">الوفيات</h6>
+                        <h5 class="dm-h my-1 text-center font-weight-bold" id="world-total-deaths"></h5>
+                    </div>
+                    <div class="col gradient-awesome text-right mx-1">
+                        <h6 class="dm-h fs-14 my-1">المتعافين</h6>
+                        <h5 class="dm-h my-1 text-center font-weight-bold" id="world-total-recovered"></h5>
+                    </div>
+                </div>
+                <h6 class="dm-h mt-4 my-1 text-right"><img src="../assets/countires.png" alt="" width="20" height="20"
+                                                           class="ml-1"> الحالات حسب أعلى الدول </h6>
+                <hr class="hr-awesome-right w-50">
+                <div class="limiter">
+                    <div class="container-table100">
+                        <div class="wrap-table100">
+                            <div class="table100">
+                                <table>
+                                    <thead>
+                                    <tr class="table100-head">
+                                        <th class="column1">الدولة</th>
+                                        <th class="column1">المصابين</th>
+                                        <th class="column1">الوفيات</th>
+                                        <th class="column1">المتعافين</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="countries-table-body">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../scripts/utils.js"></script>
+<script src="../controllers/corona.controller.js"></script>
+</body>
+</html>

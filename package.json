@@ -1,0 +1,28 @@
+{
+  "name": "Lands-Co",
+  "version": "1.0.0",
+  "description": "Lands-Co",
+  "main": "src/main.js",
+  "author": "Ma7MOoOD SHaRaF",
+  "scripts": {
+    "start": "electron src/main.js",
+    "pack:win32": "electron-packager . \"Lands-Co\" --overwrite --asar --prune=true --out=dist/win --platform=win32 --arch=ia32 --electron-version=13.1.2 --icon=src/assets/lands-co.ico -out=release-builds",
+    "pack:win64": "electron-packager . \"Lands-Co\" --overwrite --asar --prune=true --out=dist/win --platform=win32 --arch=x64 --electron-version=13.1.2 --icon=src/assets/lands-co.ico -out=release-builds",
+    "build": "npm run pack:win32 && npm run pack:win64",
+    "setup": "node src/build_installer.js"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.57",
+    "electron": "^13.1.2",
+    "electron-wix-msi": "^3.2.0"
+  },
+  "dependencies": {
+    "chart.js": "^3.4.0",
+    "electron-reload": "^1.5.0",
+    "jquery": "^3.6.0",
+    "moment": "^2.29.1",
+    "node-schedule": "^2.0.0",
+    "rive-js": "^0.7.15"
+  }
+}
