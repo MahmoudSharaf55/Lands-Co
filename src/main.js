@@ -171,7 +171,6 @@ ipcMain.on("close-notify-window", (event, arg) => {
 ipcMain.on("hide-to-tray", (event, arg) => {
     minimizeAllWindows();
 });
-
 app.whenReady().then(() => {
     display = screen.getPrimaryDisplay();
     tray = new Tray(__dirname + '/assets/lands-co.ico');

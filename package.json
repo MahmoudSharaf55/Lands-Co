@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "author": "Ma7MOoOD SHaRaF",
   "scripts": {
-    "start": "electron src/main.js",
+    "start": "electron --enable-transparent-visuals src/main.js",
     "pack:win32": "electron-packager . \"Lands-Co\" --overwrite --asar --prune=true --out=dist/win --platform=win32 --arch=ia32 --electron-version=13.1.2 --icon=src/assets/lands-co.ico -out=release-builds",
     "pack:win64": "electron-packager . \"Lands-Co\" --overwrite --asar --prune=true --out=dist/win --platform=win32 --arch=x64 --electron-version=13.1.2 --icon=src/assets/lands-co.ico -out=release-builds",
     "build": "npm run pack:win32 && npm run pack:win64",
