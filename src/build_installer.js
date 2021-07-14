@@ -1,6 +1,6 @@
 const { MSICreator } = require('electron-wix-msi');
 
-const APP_DIR = 'C:\\Users\\gnozom\\WebstormProjects\\Lands-Co\\dist\\win\\Lands-Co-win32-x64';
+const APP_DIR = 'C:\\Users\\gnozom\\WebstormProjects\\Lands-Co\\dist\\win\\Lands-Co-win32-1';
 const OUT_DIR = 'C:\\Users\\gnozom\\WebstormProjects\\Lands-Co\\dist\\installer';
 
 const msiCreator = new MSICreator({

@@ -1,5 +1,10 @@
-const fs = require('fs');
+const {ipcRenderer, remote} = require('electron');
+const fse = require('fs-extra');
+const moment = require('moment');
+const path = require('path');
+const appDir = !remote.app.isPackaged ? path.resolve('./') : path.dirname(process.execPath);
 let darkMode = localStorage.getItem('lands_darkMode');
+let enableSound = localStorage.getItem('enable_sound') ?? '1';
 const darkModeToggle = document.querySelector('#dark-mode-toggle');
 const enableDarkMode = () => {
     const btn = document.getElementById('dark-mode-btn-img');
@@ -32,6 +37,17 @@ darkModeToggle && darkModeToggle.addEventListener('click', () => {
         document.getElementById('dark-mode-btn-img').src = '../assets/moon.png';
     }
 });
+
+function setSoundIcon() {
+    document.getElementById('sound-icon').src = enableSound === '1' ? '../assets/sound.png' : '../assets/no-sound.png';
+}
+
+function toggleSoundIcon() {
+    enableSound = enableSound === '1' ? '0' : '1';
+    document.getElementById('sound-icon').src = enableSound === '1' ? '../assets/sound.png' : '../assets/no-sound.png';
+    localStorage.setItem('enable_sound', enableSound);
+}
+
 const SnackbarType = {
     SUCCESS: 'success',
     WRONG: 'wrong',
@@ -70,34 +86,35 @@ const JsonType = {
 }
 
 function getCoronaFromJson() {
-    const rawData = fs.readFileSync('data/corona.json', 'utf8');
-    return JSON.parse(rawData);
+    return fse.readJsonSync(appDir + '/data/corona.json');
 }
 
 function getWeatherFromJson() {
-    const rawData = fs.readFileSync('data/weather.json', 'utf8');
-    return JSON.parse(rawData);
+    return fse.readJsonSync(appDir + '/data/weather.json');
 }
 
 function getCurrencyFromJson() {
-    const rawData = fs.readFileSync('data/currency.json', 'utf8');
-    return JSON.parse(rawData);
+    return fse.readJsonSync(appDir + '/data/currency.json');
 }
 
 function getPrayerFromJson() {
-    const rawData = fs.readFileSync('data/prayer.json', 'utf8');
-    return JSON.parse(rawData);
+    return fse.readJsonSync(appDir + '/data/prayer.json');
 }
 
 function getFootballFromJson() {
-    const rawData = fs.readFileSync('data/football.json', 'utf8');
-    return JSON.parse(rawData);
+    return fse.readJsonSync(appDir + '/data/football.json');
 }
 
 function writeLog(text) {
     try {
-        fs.appendFileSync('log.txt', `-------------- ${moment().format('DD/MM/YYYY HH:mm A')} --------------\r\n${text}\r\n`);
+        fse.outputFileSync(appDir + '/log.txt', `-------------- ${moment().format('DD/MM/YYYY HH:mm A')} --------------\r\n${text}\r\n`, {
+            flag: 'a'
+        });
     } catch (e) {
         console.log(e);
     }
+}
+
+function dataExists() {
+    return fse.pathExistsSync(appDir + '/data');
 }

@@ -5,7 +5,7 @@
   "main": "src/main.js",
   "author": "Ma7MOoOD SHaRaF",
   "scripts": {
-    "start": "electron --enable-transparent-visuals src/main.js",
+    "start": "electron src/main.js",
     "pack:win32": "electron-packager . \"Lands-Co\" --overwrite --asar --prune=true --out=dist/win --platform=win32 --arch=ia32 --electron-version=13.1.2 --icon=src/assets/lands-co.ico -out=release-builds",
     "pack:win64": "electron-packager . \"Lands-Co\" --overwrite --asar --prune=true --out=dist/win --platform=win32 --arch=x64 --electron-version=13.1.2 --icon=src/assets/lands-co.ico -out=release-builds",
     "build": "npm run pack:win32 && npm run pack:win64",
@@ -15,11 +15,14 @@
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.57",
     "electron": "^13.1.2",
+    "electron-reload": "^1.5.0",
     "electron-wix-msi": "^3.2.0"
   },
   "dependencies": {
+    "auto-launch": "^5.0.5",
     "chart.js": "^3.4.0",
-    "electron-reload": "^1.5.0",
+    "chokidar": "^3.5.2",
+    "fs-extra": "^10.0.0",
     "jquery": "^3.6.0",
     "moment": "^2.29.1",
     "node-schedule": "^2.0.0",

@@ -1,8 +1,9 @@
-const {ipcRenderer} = require('electron');
 const {Rive} = require('rive-js');
 const $ = require('jquery');
-const moment = require('moment');
 const schedule = require('node-schedule');
+const chokidar = require('chokidar');
+const os = require('os');
+
 const rive = new Rive({
     src: '../assets/mosque.riv',
     canvas: document.getElementById('mosque-riv'),
@@ -23,11 +24,15 @@ const rive1 = new Rive({
 });
 
 (() => {
-    renderCorona();
-    renderWeather();
-    renderCurrency();
-    renderPrayer();
-    renderFootball();
+    if (dataExists()) {
+        renderCorona();
+        renderWeather();
+        renderCurrency();
+        renderPrayer();
+        renderFootball();
+    } else {
+        showSnackbarWithType('مجلد البيانات غير موجود', SnackbarType.WRONG);
+    }
 })();
 
 function minimizeWindowToTray() {
@@ -42,10 +47,6 @@ function openAboutWindow() {
     ipcRenderer.send('open-about-window');
 }
 
-function openNotifyWindow() {
-    ipcRenderer.send('open-notify-window', {notifyType: 'azan'});
-}
-
 function renderCorona() {
     try {
         const data = getCoronaFromJson();
@@ -56,6 +57,7 @@ function renderCorona() {
         $('#allDeaths').text(data.egypt.deaths);
         $('#allRecovered').text(data.egypt.recovered);
     } catch (e) {
+        console.log(e);
         writeLog(e);
         showSnackbarWithType('خطأ فى كتابة بيانات الكورونا', SnackbarType.WRONG);
     }
@@ -101,15 +103,15 @@ function renderPrayer() {
     try {
         const data = getPrayerFromJson();
         const fajrTime = moment(data.times.Fajr, 'HH:mm');
-        createScheduleJob(fajrTime.hours(),fajrTime.minutes());
+        createScheduleJob(fajrTime.hours(), fajrTime.minutes());
         const dhuhrTime = moment(data.times.Dhuhr, 'HH:mm');
-        createScheduleJob(dhuhrTime.hours(),dhuhrTime.minutes());
+        createScheduleJob(dhuhrTime.hours(), dhuhrTime.minutes());
         const asrTime = moment(data.times.Asr, 'HH:mm');
-        createScheduleJob(asrTime.hours(),asrTime.minutes());
+        createScheduleJob(asrTime.hours(), asrTime.minutes());
         const maghribTime = moment(data.times.Maghrib, 'HH:mm');
-        createScheduleJob(maghribTime.hours(),maghribTime.minutes());
+        createScheduleJob(maghribTime.hours(), maghribTime.minutes());
         const ishaTime = moment(data.times.Isha, 'HH:mm');
-        createScheduleJob(ishaTime.hours(),ishaTime.minutes());
+        createScheduleJob(ishaTime.hours(), ishaTime.minutes());
         $('#fajr-time').text(fajrTime.format('hh:mm A'));
         $('#dhuhr-time').text(dhuhrTime.format('hh:mm A'));
         $('#asr-time').text(asrTime.format('hh:mm A'));
@@ -132,7 +134,7 @@ function renderFootball() {
                                     <h6 class="dm-h p-1 fs-12 m-auto">${fixture.team1}</h6>
                                 </div>
                                 <div class="box-awesome p-0 mx-1 d-flex">
-                                    <h6 class="dm-h p-1 m-auto clr-primary fs-14">${fixture.time}</h6>
+                                    <h6 class="dm-h p-1 m-auto clr-primary fs-12">${fixture.time}</h6>
                                 </div>
                                 <div class="box-awesome p-0 flex-grow-1 d-flex">
                                     <h6 class="dm-h p-1 fs-12 m-auto">${fixture.team2}</h6>
@@ -168,17 +170,58 @@ function showDetailScreen(screen) {
     ipcRenderer.send('open-details', {screen: screen});
 }
 
-function closeDetailScreen(screen) {
-    ipcRenderer.send('close-details', {screen: screen});
+function createScheduleJob(hour, min) {
+    try {
+        const rule = new schedule.RecurrenceRule();
+        rule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
+        rule.hour = hour;
+        rule.minute = min;
+        schedule.scheduleJob(rule, function () {
+            ipcRenderer.send('open-notify-window', {notifyType: 'azan'});
+        });
+    } catch (e) {
+        writeLog('cannot create schedule job ' + e);
+    }
 }
 
-function createScheduleJob(hour, min) {
-    const rule = new schedule.RecurrenceRule();
-    rule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
-    rule.hour = hour;
-    rule.minute = min;
-    schedule.scheduleJob(rule, function () {
-        writeLog(`job invoked in ${hour}:${min} and next invoke in ${rule.nextInvocationDate()}`);
-        ipcRenderer.send('open-notify-window', {notifyType: 'azan'});
-    });
+watchData();
+
+function watchData() {
+    try {
+        const watcher = chokidar.watch(appDir + '/data', {
+            persistent: true,
+            awaitWriteFinish: true,
+            ignoreInitial: true,
+        });
+        watcher
+            .on('add', path => remote.getCurrentWindow().reload())
+            .on('change', path => remote.getCurrentWindow().reload())
+            .on('unlinkDir', path => ipcRenderer.send('close-app'));
+    } catch (e) {
+        writeLog('data watcher error ' + e);
+    }
+}
+
+watchMessages();
+
+function watchMessages() {
+    try {
+        const watcher = chokidar.watch(appDir + '/message/message.json', {
+            persistent: true,
+            awaitWriteFinish: true,
+            ignoreInitial: true,
+        });
+        watcher
+            .on('add', path => openMessageWindow())
+            .on('change', path => openMessageWindow());
+    } catch (e) {
+        writeLog('message watcher error ' + e);
+    }
+}
+
+function openMessageWindow() {
+    const data = fse.readJsonSync(appDir + '/message/message.json');
+    if (os.hostname() === data.computer) {
+        ipcRenderer.send('open-notify-window', {notifyType: 'message', msg: data.message, sender: data.sender});
+    }
 }

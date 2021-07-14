@@ -1,10 +1,8 @@
-const {ipcRenderer} = require('electron');
 const {Chart} = require('chart.js');
 const $ = require('jquery');
-const moment = require('moment');
 
 function closeWindow() {
-    ipcRenderer.send('close-details');
+    remote.getCurrentWindow().close();
 }
 
 (() => {

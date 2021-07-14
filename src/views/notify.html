@@ -3,20 +3,19 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
     <meta charset="UTF-8">
-    <title>الأذان</title>
+    <title>تنبية</title>
     <link rel="stylesheet" href="../styles/bootstrap.min.css">
     <link rel="stylesheet" href="../styles/style.css">
 </head>
 <body>
-<div class="window-content notify-window direction-rtl d-flex">
+<div class="window-content notify-window direction-rtl d-flex" id="notify-bg">
     <i style="position: absolute;top: 5px;right: 5px;cursor: pointer" onclick="closeNotifyWindow()"><img
             src="../assets/close.png" width="12"
             height="12" alt=""></i>
-    <div class="flex-grow-1">
+    <div class="flex-grow-1" id="notify-body">
         <canvas id="text-riv" class="align-self-center"></canvas>
     </div>
 </div>
-<audio id="player" autoplay onended="closeNotifyWindow()"></audio>
 <script src="../scripts/utils.js"></script>
 <script src="../controllers/notify.controller.js"></script>
 </body>

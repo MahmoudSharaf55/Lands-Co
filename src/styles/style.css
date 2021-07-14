@@ -98,6 +98,15 @@ body {
     background-size: 300px 150px;
 }
 
+.message-in-window {
+    width: 400px;
+    height: 200px;
+}
+
+.notify-bg-dm {
+    background: var(--background);
+}
+
 .detail-window {
     width: 950px;
     height: 550px;
@@ -121,7 +130,7 @@ h1, h2, h3, h4, h5, h6 {
     transition: var(--transition);
 }
 
-button, input, select, link, i, a, canvas {
+button, input, select, link, i, a, canvas, textarea {
     -webkit-app-region: no-drag;
 }
 
@@ -820,4 +829,11 @@ input.form-control {
 
 #matches-content::-webkit-scrollbar {
     width: 0;
+}
+
+textarea.form-control{
+    overflow: hidden;
+    resize: none;
+    border-radius: 10px;
+    font-size: 14px;
 }
