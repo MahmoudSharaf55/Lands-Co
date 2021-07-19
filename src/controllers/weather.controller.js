@@ -22,23 +22,30 @@ function renderWeatherData() {
             </div>`;
         }
         const data = getWeatherFromJson();
-        $('#today-weather-icon').attr('src', `../assets/weather/${data[0].weather[0].icon}.png`);
-        $('#today-temp').text(`${~~data[0].temp.max}`);
-        $('#today-humidity').text(`${~~data[0].humidity}%`);
-        $('#today-description').text(data[0].weather[0].description);
-        let sunriseTime = moment.utc(data[0].sunrise * 1000).add({"h": 2}).format('hh:mm A');
-        let sunsetTime = moment.utc(data[0].sunset * 1000).add({"h": 2}).format('hh:mm A');
-        let todayDate = moment.utc(data[0].dt * 1000).add({"h": 2});
+        let today = data[0];
+        for (const day of data) {
+            if (moment(moment(day.dt * 1000).format('YYYY-MM-DD')).isSame(moment().format('YYYY-MM-DD'))) {
+                today = day;
+            }
+        }
+        $('#today-weather-icon').attr('src', `../assets/weather/${today.weather[0].icon}.png`);
+        $('#today-temp').text(`${~~today.temp.max}`);
+        $('#today-humidity').text(`${~~today.humidity}%`);
+        $('#today-description').text(today.weather[0].description);
+        let sunriseTime = moment.utc(today.sunrise * 1000).add({"h": 2}).format('hh:mm A');
+        let sunsetTime = moment.utc(today.sunset * 1000).add({"h": 2}).format('hh:mm A');
+        let todayDate = moment.utc(today.dt * 1000).add({"h": 2});
         $('#today-sunrise').text(sunriseTime);
         $('#today-sunset').text(sunsetTime);
         $('#today-weather-date').text(todayDate.locale('ar').format("dddd، DD MMMM YYYY"));
-        $('#today-min-max-temp').text(`${~~data[0].temp.max}° / ${~~data[0].temp.min}°`);
+        $('#today-min-max-temp').text(`${~~today.temp.max}° / ${~~today.temp.min}°`);
         $('#weather-timeline-content').html('');
         let date;
-        data.shift();
         for (const day of data) {
-            date = moment.utc(day.dt * 1000).add({"h": 2});
-            $('#weather-timeline-content').append(weatherCardWidget(~~day.temp.min, ~~day.temp.max, day.weather[0].description, day.weather[0].icon,date.format('YYYY-MM-DD')));
+            if (!moment(moment(day.dt * 1000).format('YYYY-MM-DD')).isSame(moment().format('YYYY-MM-DD'))) {
+                date = moment.utc(day.dt * 1000).add({"h": 2});
+                $('#weather-timeline-content').append(weatherCardWidget(~~day.temp.min, ~~day.temp.max, day.weather[0].description, day.weather[0].icon, date.format('YYYY-MM-DD')));
+            }
         }
     } catch (e) {
         writeLog(e);

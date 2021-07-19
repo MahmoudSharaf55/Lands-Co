@@ -107,7 +107,7 @@ function getFootballFromJson() {
 
 function writeLog(text) {
     try {
-        fse.outputFileSync(appDir + '/log.txt', `-------------- ${moment().format('DD/MM/YYYY HH:mm A')} --------------\r\n${text}\r\n`, {
+        fse.outputFileSync(appDir + '/log.txt', `-------------- ${moment().format('DD/MM/YYYY hh:mm A')} --------------\r\n${text}\r\n`, {
             flag: 'a'
         });
     } catch (e) {

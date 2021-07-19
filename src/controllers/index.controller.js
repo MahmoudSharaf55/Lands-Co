@@ -66,13 +66,19 @@ function renderCorona() {
 function renderWeather() {
     try {
         const data = getWeatherFromJson();
-        $('#today-temp').html(`<sub> ${~~data[0].temp.min}° / </sub> ${~~data[0].temp.max}°`);
-        $('#today-description').text(data[0].weather[0].description);
-        const sunriseTime = moment.utc(data[0].sunrise * 1000).add({"h": 2}).format('hh:mm A');
-        const sunsetTime = moment.utc(data[0].sunset * 1000).add({"h": 2}).format('hh:mm A');
+        let today = data[0];
+        for (const day of data) {
+            if (moment(moment(day.dt * 1000).format('YYYY-MM-DD')).isSame(moment().format('YYYY-MM-DD'))) {
+                today = day;
+            }
+        }
+        $('#today-temp').html(`<sub> ${~~today.temp.min}° / </sub> ${~~today.temp.max}°`);
+        $('#today-description').text(today.weather[0].description);
+        const sunriseTime = moment.utc(today.sunrise * 1000).add({"h": 2}).format('hh:mm A');
+        const sunsetTime = moment.utc(today.sunset * 1000).add({"h": 2}).format('hh:mm A');
         $('#today-sunrise').text(sunriseTime);
         $('#today-sunset').text(sunsetTime);
-        $('#today-weather-icon').attr('src', `../assets/weather/${data[0].weather[0].icon}.png`);
+        $('#today-weather-icon').attr('src', `../assets/weather/${today.weather[0].icon}.png`);
     } catch (e) {
         writeLog(e);
         showSnackbarWithType('خطأ فى كتابة بيانات الطقس', SnackbarType.WRONG);
@@ -147,9 +153,9 @@ function renderFootball() {
                         ${fixturesList}
                     </div>`;
         }
-        const data = getFootballFromJson();
-        $('#football-content').html('');
-        for (const league of data) {
+        const {today} = getFootballFromJson();
+        $('#football-content').html(today.length ? '' : '<h6 class="dm-h fs-12">لا يوجد مباريات اليوم</h6>');
+        for (const league of today) {
             $('#football-content').append(leagueWidget(league.leagueName, league.fixtures));
         }
     } catch (e) {
@@ -195,8 +201,7 @@ function watchData() {
         });
         watcher
             .on('add', path => remote.getCurrentWindow().reload())
-            .on('change', path => remote.getCurrentWindow().reload())
-            .on('unlinkDir', path => ipcRenderer.send('close-app'));
+            .on('change', path => remote.getCurrentWindow().reload());
     } catch (e) {
         writeLog('data watcher error ' + e);
     }
@@ -221,7 +226,32 @@ function watchMessages() {
 
 function openMessageWindow() {
     const data = fse.readJsonSync(appDir + '/message/message.json');
-    if (os.hostname() === data.computer) {
-        ipcRenderer.send('open-notify-window', {notifyType: 'message', msg: data.message, sender: data.sender});
+    console.log(data);
+    if (os.hostname() === data.receiverPc) {
+        ipcRenderer.send('open-notify-window', {notifyType: 'message', ...data});
+    }
+}
+
+watchConfig();
+
+function watchConfig() {
+    try {
+        const watcher = chokidar.watch(appDir + '/config/config.json', {
+            persistent: true,
+            awaitWriteFinish: true,
+            ignoreInitial: true,
+        });
+        watcher
+            .on('add', path => configActionOnWatching())
+            .on('change', path => configActionOnWatching());
+    } catch (e) {
+        writeLog('config watcher error ' + e);
+    }
+}
+
+function configActionOnWatching() {
+    const data = fse.readJsonSync(appDir + '/config/config.json');
+    if (data.closeApp == 1) {
+        ipcRenderer.send('close-app');
     }
 }

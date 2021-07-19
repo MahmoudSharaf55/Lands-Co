@@ -1,5 +1,9 @@
 const {app, BrowserWindow, ipcMain, Tray, Menu, screen, dialog, globalShortcut} = require('electron');
 const AutoLaunch = require('auto-launch');
+const path = require('path');
+const os = require('os');
+const fse = require('fs-extra');
+let appDir;
 // require('electron-reload')(__dirname);
 let mainWindow;
 let aboutWindow;
@@ -236,14 +240,18 @@ if (!gotTheLock) {
         }
     });
     app.whenReady().then(() => {
+        appDir = !app.isPackaged ? path.resolve('./') : path.dirname(process.execPath);
         display = screen.getPrimaryDisplay();
         tray = new Tray(__dirname + '/assets/lands-co.ico');
         globalShortcut.register('CommandOrControl+M', () => {
-            if (messageInWindow) {
-                if (messageInWindow.isMinimized()) messageInWindow.restore();
-                messageInWindow.focus();
-            } else
-                createMessageInWindow();
+            const configData = fse.readJsonSync(appDir + '/config/config.json');
+            if (configData.allowedDevices.indexOf(os.hostname()) >= 0){
+                if (messageInWindow) {
+                    if (messageInWindow.isMinimized()) messageInWindow.restore();
+                    messageInWindow.focus();
+                } else
+                    createMessageInWindow();
+            }
         });
         const contextMenu = Menu.buildFromTemplate([
             {label: 'تكبير', type: 'normal', click: () => maximizeAllWindows()},

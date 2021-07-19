@@ -831,9 +831,106 @@ input.form-control {
     width: 0;
 }
 
-textarea.form-control{
+textarea.form-control {
     overflow: hidden;
     resize: none;
     border-radius: 10px;
     font-size: 14px;
+}
+
+input.autocomplete-input + div.autocomplete-list {
+    display: none;
+    position: absolute;
+    width: 100%;
+    max-height: 50vh;
+    overflow-y: auto;
+    background: var(--background);
+    border-radius: 10px;
+    border: 1px solid var(--clr-primary);
+    z-index: 100;
+    scrollbar-width: thin;
+    scrollbar-color: #BBB #EEE;
+}
+
+input.autocomplete-input + div.autocomplete-list::-webkit-scrollbar {
+    width: 3px;
+}
+
+input.autocomplete-input + div.autocomplete-list::-webkit-scrollbar-track {
+    background: var(--clr-primary-light);
+    margin: 5px 0 5px 0;
+}
+
+input.autocomplete-input + div.autocomplete-list::-webkit-scrollbar-thumb {
+    background-color: #999;
+    border-radius: 10px;
+    border: 3px solid #C0C3C6;
+}
+
+input.autocomplete-input + div.autocomplete-list span {
+    display: block;
+    padding: 5px;
+    color: var(--foreground);
+    text-decoration: none;
+    cursor: pointer;
+    text-align: right;
+    font-size: 14px;
+}
+
+input.autocomplete-input + div.autocomplete-list span:not(:last-child) {
+    border-bottom: 1px solid var(--clr-primary);
+}
+
+input.autocomplete-input + div.autocomplete-list span:hover {
+    background: var(--clr-primary-light);
+}
+.no-drag{
+    -webkit-app-region: no-drag;
+}
+.btn-triangle{
+    position: relative;
+    cursor: pointer;
+    padding-right: 0;
+}
+.btn-triangle:before{
+    visibility: hidden;
+    opacity: 0;
+    content:"\A";
+    border-style: solid;
+    border-width: 6px 11px 6px 0;
+    border-color: transparent var(--clr-secondary) transparent transparent;
+    position: absolute;
+    right: -5px;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    height: 0;
+    margin: auto;
+    transition: all 0.5s ease-in-out;
+}
+.btn-triangle.active{
+    color: var(--clr-secondary);
+}
+.btn-triangle.active:before{
+    color: var(--clr-secondary);
+    right: -20px;
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.5s ease-in-out;
+}
+.btn-triangle:hover:before{
+    right: -20px;
+    opacity: 1;
+    visibility: visible;
+    transition: all 0.5s ease-in-out;
+}
+
+#azkar-content {
+    overflow: scroll;
+    overflow-x: hidden;
+    -webkit-app-region: no-drag;
+}
+
+#azkar-content::-webkit-scrollbar {
+    width: 0;
 }

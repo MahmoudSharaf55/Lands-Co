@@ -1,1 +1,8 @@
-{"computer":"lap","sender":"lap","message":"asd"}
+{
+  "receiverPc": "lap",
+  "receiverName": "لابتوب",
+  "senderName": "محمود",
+  "senderPc": "lap",
+  "date": "19-07-2021 10:38 AM",
+  "message": "بح"
+}

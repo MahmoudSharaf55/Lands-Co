@@ -14,10 +14,15 @@ ipcRenderer.on('notify-args', (event, args) => {
                 break;
             case "message":
                 document.getElementById('notify-bg').classList.add('notify-bg-dm');
-                document.getElementById('notify-body').innerHTML = `<div class="p-1 pt-2">
-                                                                                <h6 class="dm-h fs-15 text-center">رسالة جديدة من ${args.sender}</h6>
+                document.getElementById('notify-body').innerHTML = `<div class="p-1 pt-2 d-flex flex-column h-100">
+                                                                                <h6 class="dm-h fs-15 text-center">رسالة جديدة من ${args.senderName}</h6>
                                                                                 <hr class="hr-awesome">
-                                                                                <h6 class="dm-h fs-14 text-center">${args.msg}</h6>
+                                                                                <h6 class="dm-h fs-14 text-center flex-grow-1">${args.message}</h6>
+                                                                                <hr class="hr-awesome">
+                                                                                <div class="row">
+                                                                                    <h6 class="col dm-h fs-14 text-right">${args.date}</h6>
+                                                                                    <h6 class="col dm-h fs-14">${args.senderPc}</h6>
+                                                                                </div>
                                                                             </div>`;
                 break;
         }

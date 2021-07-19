@@ -10,15 +10,28 @@
 <body>
 <div class="window-content message-in-window direction-rtl d-flex">
     <i style="position: absolute;top: 5px;right: 10px;cursor: pointer" onclick="closeWindow()"><img
-            src="../assets/close.png" width="12"
+            src="../assets/close-orange.png" width="12"
             height="12" alt=""></i>
     <div class="flex-grow-1 px-2 pt-2 pb-1 d-flex flex-column">
         <h6 class="dm-h text-center">إرسال رسالة</h6>
         <hr class="hr-awesome">
-        <input id="computer" class="form-control mb-1 dm-input direction-rtl" type="text"
-               placeholder="إسم الجهاز">
+        <div class="row">
+            <div class="col p-0">
+                <input id="username" class="form-control mb-1 dm-input direction-rtl autocomplete-input" type="text"
+                       placeholder="الإسم">
+                <div id="username-list" class="autocomplete-list">
+                </div>
+            </div>
+            <div class="px-1"></div>
+            <div class="col p-0">
+                <input id="computer" class="form-control mb-1 dm-input direction-rtl autocomplete-input" type="text"
+                       placeholder="الجهاز">
+                <div id="computer-list" class="autocomplete-list">
+                </div>
+            </div>
+        </div>
         <textarea id="msg" class="form-control mb-1 dm-input direction-rtl flex-grow-1" type="text"
-               placeholder="الرسالة"></textarea>
+                  placeholder="الرسالة"></textarea>
         <button class="btn-3d btn-3d align-self-end" onclick="sendMessage()">
             إرسال
         </button>

@@ -1,0 +1,72 @@
+-------------- 18/07/2021 09:30 PM --------------
+TypeError: $(...).appendTo(...).slow is not a function
+-------------- 18/07/2021 09:30 PM --------------
+TypeError: $(...).appendTo(...).slow is not a function
+-------------- 18/07/2021 09:30 PM --------------
+TypeError: $(...).appendTo(...).slow is not a function
+-------------- 18/07/2021 09:31 PM --------------
+TypeError: $(...).appendTo(...).slow is not a function
+-------------- 18/07/2021 09:31 PM --------------
+TypeError: $(...).appendTo(...).slow is not a function
+-------------- 18/07/2021 09:32 PM --------------
+TypeError: $(...).appendTo(...).slow is not a function
+-------------- 18/07/2021 09:32 PM --------------
+TypeError: $(...).appendTo(...).slow is not a function
+-------------- 18/07/2021 09:32 PM --------------
+TypeError: $(...).hide(...).appendTo(...).slow is not a function
+-------------- 18/07/2021 09:32 PM --------------
+TypeError: $(...).appendTo(...).slow is not a function
+-------------- 18/07/2021 09:33 PM --------------
+TypeError: $(...).appendTo(...).slow is not a function
+-------------- 18/07/2021 09:34 PM --------------
+TypeError: $(...).appendTo(...).slow is not a function
+-------------- 18/07/2021 09:37 PM --------------
+TypeError: $(...).appendTo(...).slow is not a function
+-------------- 18/07/2021 09:39 PM --------------
+TypeError: $(...).hide(...).appendTo(...).scale is not a function
+-------------- 19/07/2021 12:09 PM --------------
+TypeError: data is not iterable
+-------------- 19/07/2021 12:09 PM --------------
+TypeError: todayData is not iterable
+-------------- 19/07/2021 12:14 PM --------------
+TypeError: data is not iterable
+-------------- 19/07/2021 12:15 PM --------------
+ReferenceError: data is not defined
+-------------- 19/07/2021 12:15 PM --------------
+ReferenceError: data is not defined
+-------------- 19/07/2021 12:15 PM --------------
+ReferenceError: data is not defined
+-------------- 19/07/2021 12:16 PM --------------
+ReferenceError: data is not defined
+-------------- 19/07/2021 01:16 PM --------------
+TypeError: Cannot read property 'length' of undefined
+-------------- 19/07/2021 01:16 PM --------------
+ReferenceError: renderAzkarData is not defined
+-------------- 19/07/2021 01:18 PM --------------
+TypeError: Cannot read property 'length' of undefined
+-------------- 19/07/2021 01:18 PM --------------
+ReferenceError: renderAzkarData is not defined
+-------------- 19/07/2021 01:18 PM --------------
+TypeError: Cannot read property 'length' of undefined
+-------------- 19/07/2021 01:18 PM --------------
+ReferenceError: renderAzkarData is not defined
+-------------- 19/07/2021 01:18 PM --------------
+TypeError: Cannot read property 'length' of undefined
+-------------- 19/07/2021 01:18 PM --------------
+ReferenceError: renderAzkarData is not defined
+-------------- 19/07/2021 01:18 PM --------------
+TypeError: Cannot read property 'length' of undefined
+-------------- 19/07/2021 01:18 PM --------------
+ReferenceError: renderAzkarData is not defined
+-------------- 19/07/2021 01:18 PM --------------
+TypeError: Cannot read property 'length' of undefined
+-------------- 19/07/2021 01:18 PM --------------
+ReferenceError: renderAzkarData is not defined
+-------------- 19/07/2021 01:20 PM --------------
+TypeError: Cannot read property 'length' of undefined
+-------------- 19/07/2021 01:20 PM --------------
+ReferenceError: renderAzkarData is not defined
+-------------- 19/07/2021 01:22 PM --------------
+SyntaxError: C:\Users\gnozom\WebstormProjects\lands-co/data/football.json: Unexpected token ] in JSON at position 949
+-------------- 19/07/2021 01:22 PM --------------
+SyntaxError: C:\Users\gnozom\WebstormProjects\lands-co/data/football.json: Unexpected token ] in JSON at position 949
