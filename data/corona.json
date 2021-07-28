@@ -1,1 +1,80 @@
-{"egypt":{"updated":1626465431284,"cases":283490,"recovered":221516,"deaths":16425,"todayCases":81,"todayDeaths":7,"todayRecovered":986},"egyptTimeline":{"cases":{"7/11/21":283102,"7/12/21":283212,"7/13/21":283320,"7/14/21":283409,"7/15/21":283490},"deaths":{"7/11/21":16396,"7/12/21":16403,"7/13/21":16412,"7/14/21":16418,"7/15/21":16425},"recovered":{"7/11/21":218412,"7/12/21":219291,"7/13/21":219525,"7/14/21":220530,"7/15/21":221516}},"world":{"updated":1626465430878,"cases":190117064,"todayCases":410552,"recovered":173368564,"todayRecovered":237139,"deaths":4087919,"todayDeaths":5184},"countries":[{"updated":1626465430880,"countryName":"أمريكا","cases":34894787,"recovered":29345388,"deaths":624297},{"updated":1626465430882,"countryName":"الهند","cases":31063987,"recovered":30220183,"deaths":413123},{"updated":1626465430884,"countryName":"البرازيل","cases":19262518,"recovered":17917189,"deaths":539050},{"updated":1626465430885,"countryName":"روسيا","cases":5907999,"recovered":5300908,"deaths":146868},{"updated":1626465430887,"countryName":"فرنسا","cases":5844249,"recovered":5657014,"deaths":111451}]}
+{
+  "egypt": {
+    "updated": 1627464610186,
+    "cases": 284090,
+    "recovered": 228624,
+    "deaths": 16498,
+    "todayCases": 31,
+    "todayDeaths": 4,
+    "todayRecovered": 654
+  },
+  "egyptTimeline": {
+    "cases": {
+      "7/23/21": 283947,
+      "7/24/21": 283985,
+      "7/25/21": 284024,
+      "7/26/21": 284059,
+      "7/27/21": 284090
+    },
+    "deaths": {
+      "7/23/21": 16477,
+      "7/24/21": 16481,
+      "7/25/21": 16487,
+      "7/26/21": 16494,
+      "7/27/21": 16498
+    },
+    "recovered": {
+      "7/23/21": 227068,
+      "7/24/21": 227490,
+      "7/25/21": 227612,
+      "7/26/21": 227970,
+      "7/27/21": 228624
+    }
+  },
+  "world": {
+    "updated": 1627464609512,
+    "cases": 196035575,
+    "todayCases": 92972,
+    "recovered": 177718693,
+    "todayRecovered": 82916,
+    "deaths": 4194208,
+    "todayDeaths": 1838
+  },
+  "countries": [
+    {
+      "updated": 1627464609516,
+      "countryName": "أمريكا",
+      "cases": 35353923,
+      "recovered": 29571434,
+      "deaths": 627351
+    },
+    {
+      "updated": 1627464609519,
+      "countryName": "الهند",
+      "cases": 31484605,
+      "recovered": 30663147,
+      "deaths": 422054
+    },
+    {
+      "updated": 1627464609521,
+      "countryName": "البرازيل",
+      "cases": 19749073,
+      "recovered": 18466822,
+      "deaths": 551906
+    },
+    {
+      "updated": 1627464609522,
+      "countryName": "روسيا",
+      "cases": 6195232,
+      "recovered": 5547529,
+      "deaths": 156178
+    },
+    {
+      "updated": 1627464609525,
+      "countryName": "فرنسا",
+      "cases": 6026115,
+      "recovered": 5682970,
+      "deaths": 111695
+    }
+  ]
+}

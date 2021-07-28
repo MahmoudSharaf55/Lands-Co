@@ -39,6 +39,10 @@ function minimizeWindowToTray() {
     ipcRenderer.send('hide-to-tray');
 }
 
+function reloadMainWindow() {
+    ipcRenderer.send('re-render-main');
+}
+
 function minimizeWindow() {
     ipcRenderer.send('minimize-main-window');
 }
@@ -178,12 +182,20 @@ function showDetailScreen(screen) {
 
 function createScheduleJob(hour, min) {
     try {
-        const rule = new schedule.RecurrenceRule();
-        rule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
-        rule.hour = hour;
-        rule.minute = min;
-        schedule.scheduleJob(rule, function () {
+        const azanRule = new schedule.RecurrenceRule();
+        azanRule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
+        azanRule.hour = hour;
+        azanRule.minute = min;
+        schedule.scheduleJob(azanRule, function () {
             ipcRenderer.send('open-notify-window', {notifyType: 'azan'});
+        });
+        const refreshRule = new schedule.RecurrenceRule();
+        refreshRule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
+        refreshRule.hour = 1;
+        refreshRule.minute = 0;
+        schedule.scheduleJob(refreshRule, function () {
+            configActionOnWatching();
+            reloadMainWindow();
         });
     } catch (e) {
         writeLog('cannot create schedule job ' + e);
@@ -194,14 +206,15 @@ watchData();
 
 function watchData() {
     try {
-        const watcher = chokidar.watch(appDir + '/data', {
+        const watcher = chokidar.watch(appDir + '\\data', {
             persistent: true,
             awaitWriteFinish: true,
             ignoreInitial: true,
+            usePolling: true,
         });
         watcher
-            .on('add', path => remote.getCurrentWindow().reload())
-            .on('change', path => remote.getCurrentWindow().reload());
+            .on('add', path => reloadMainWindow())
+            .on('change', path => reloadMainWindow());
     } catch (e) {
         writeLog('data watcher error ' + e);
     }
@@ -211,10 +224,11 @@ watchMessages();
 
 function watchMessages() {
     try {
-        const watcher = chokidar.watch(appDir + '/message/message.json', {
+        const watcher = chokidar.watch(appDir + '\\message\\message.json', {
             persistent: true,
             awaitWriteFinish: true,
             ignoreInitial: true,
+            usePolling: true,
         });
         watcher
             .on('add', path => openMessageWindow())
@@ -236,10 +250,11 @@ watchConfig();
 
 function watchConfig() {
     try {
-        const watcher = chokidar.watch(appDir + '/config/config.json', {
+        const watcher = chokidar.watch(appDir + '\\config\\config.json', {
             persistent: true,
             awaitWriteFinish: true,
             ignoreInitial: true,
+            usePolling: true,
         });
         watcher
             .on('add', path => configActionOnWatching())
@@ -251,7 +266,6 @@ function watchConfig() {
 
 function configActionOnWatching() {
     const data = fse.readJsonSync(appDir + '/config/config.json');
-    if (data.closeApp == 1) {
+    if (data.closeApp == 1)
         ipcRenderer.send('close-app');
-    }
 }

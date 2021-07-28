@@ -197,8 +197,10 @@ function minimizeAllWindows() {
 }
 
 function maximizeAllWindows() {
-    if (mainWindow != null && !mainWindow.isVisible())
+    if (mainWindow != null && !mainWindow.isVisible()) {
+        mainWindow.loadFile(__dirname + "/views/index.html");
         mainWindow.show();
+    }
     if (aboutWindow != null && !aboutWindow.isVisible())
         aboutWindow.show();
     if (detailWindow != null && !detailWindow.isVisible())
@@ -229,6 +231,9 @@ ipcMain.on("hide-to-tray", (event, arg) => {
 ipcMain.on("close-app", (event, arg) => {
     app.exit(0);
 });
+ipcMain.on("re-render-main", (event, arg) => {
+    mainWindow.loadFile(__dirname + "/views/index.html");
+});
 const gotTheLock = app.requestSingleInstanceLock();
 if (!gotTheLock) {
     app.quit();
@@ -237,6 +242,7 @@ if (!gotTheLock) {
         if (mainWindow) {
             if (mainWindow.isMinimized()) mainWindow.restore();
             mainWindow.focus();
+            mainWindow.loadFile(__dirname + "/views/index.html");
         }
     });
     app.whenReady().then(() => {
@@ -245,7 +251,7 @@ if (!gotTheLock) {
         tray = new Tray(__dirname + '/assets/lands-co.ico');
         globalShortcut.register('CommandOrControl+M', () => {
             const configData = fse.readJsonSync(appDir + '/config/config.json');
-            if (configData.allowedDevices.indexOf(os.hostname()) >= 0){
+            if (configData.allowedDevices.indexOf(os.hostname()) >= 0) {
                 if (messageInWindow) {
                     if (messageInWindow.isMinimized()) messageInWindow.restore();
                     messageInWindow.focus();
