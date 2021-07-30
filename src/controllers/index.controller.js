@@ -30,6 +30,7 @@ const rive1 = new Rive({
         renderCurrency();
         renderPrayer();
         renderFootball();
+        renderLastUpdateDate();
     } else {
         showSnackbarWithType('مجلد البيانات غير موجود', SnackbarType.WRONG);
     }
@@ -167,6 +168,9 @@ function renderFootball() {
         showSnackbarWithType('خطأ فى كتابة بيانات المباريات', SnackbarType.WRONG);
     }
 }
+function renderLastUpdateDate(){
+    $('#last-update-date').text(`أخر تحديث: ${getLastModifiedDateOfData()}`);
+}
 
 function noMoreData() {
     showSnackbarWithType('لا يوجد');
@@ -191,7 +195,7 @@ function createScheduleJob(hour, min) {
         });
         const refreshRule = new schedule.RecurrenceRule();
         refreshRule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
-        refreshRule.hour = 1;
+        refreshRule.hour = 21;
         refreshRule.minute = 0;
         schedule.scheduleJob(refreshRule, function () {
             configActionOnWatching();

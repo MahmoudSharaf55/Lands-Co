@@ -105,6 +105,23 @@ function getFootballFromJson() {
     return fse.readJsonSync(appDir + '/data/football.json');
 }
 
+function getLastModifiedDateOfData() {
+    const coronaStat = fse.statSync(appDir + '/data/corona.json');
+    const weatherStat = fse.statSync(appDir + '/data/weather.json');
+    const currencyStat = fse.statSync(appDir + '/data/currency.json');
+    const prayerStat = fse.statSync(appDir + '/data/prayer.json');
+    const footballStat = fse.statSync(appDir + '/data/football.json');
+    let max = coronaStat.mtimeMs;
+    let maxModifiedDate = coronaStat.mtime;
+    for (const date of [weatherStat, currencyStat, prayerStat, footballStat]) {
+        if (date.mtimeMs > max) {
+            max = date.mtimeMs;
+            maxModifiedDate = date.mtime;
+        }
+    }
+    return moment(maxModifiedDate).format('DD / MM / YYYY');
+}
+
 function writeLog(text) {
     try {
         fse.outputFileSync(appDir + '/log.txt', `-------------- ${moment().format('DD/MM/YYYY hh:mm A')} --------------\r\n${text}\r\n`, {

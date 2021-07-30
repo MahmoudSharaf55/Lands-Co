@@ -32,7 +32,7 @@ function createMainWindow() {
             devTools: true,
         }
     });
-    mainWindow.loadFile(__dirname + "/views/index.html");
+    mainWindow.loadFile(path.join(__dirname + "/views/index.html"));
     mainWindow.once("ready-to-show", () => {
         mainWindow.show();
     });
@@ -78,7 +78,7 @@ function createAboutWindow() {
             devTools: true,
         },
     });
-    aboutWindow.loadFile(__dirname + "/views/about.html");
+    aboutWindow.loadFile(path.join(__dirname + "/views/about.html"));
     aboutWindow.once("ready-to-show", () => {
         aboutWindow.show();
     });
@@ -98,7 +98,7 @@ function createDetailWindow(screen) {
         transparent: true,
         frame: false,
         show: false,
-        icon: __dirname + '/assets/lands-co.ico',
+        icon: path.join(__dirname + '/assets/lands-co.ico'),
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -106,7 +106,7 @@ function createDetailWindow(screen) {
             devTools: true,
         },
     });
-    detailWindow.loadFile(__dirname + `/views/${screen}.html`);
+    detailWindow.loadFile(path.join(__dirname + `/views/${screen}.html`));
 
     detailWindow.once("ready-to-show", () => {
         detailWindow.show();
@@ -130,7 +130,7 @@ function createNotifyWindow(args) {
         alwaysOnTop: true,
         frame: false,
         show: false,
-        icon: __dirname + '/assets/lands-co.ico',
+        icon: path.join(__dirname + '/assets/lands-co.ico'),
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -138,7 +138,7 @@ function createNotifyWindow(args) {
             devTools: true,
         },
     });
-    notifyWindow.loadFile(__dirname + `/views/notify.html`);
+    notifyWindow.loadFile(path.join(__dirname + `/views/notify.html`));
     notifyWindow.once("ready-to-show", () => {
         notifyWindow.show();
         notifyWindow.webContents.send('notify-args', args);
@@ -159,7 +159,7 @@ function createMessageInWindow() {
         transparent: true,
         frame: false,
         show: false,
-        icon: __dirname + '/assets/lands-co.ico',
+        icon: path.join(__dirname + '/assets/lands-co.ico'),
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -167,7 +167,7 @@ function createMessageInWindow() {
             devTools: true,
         },
     });
-    messageInWindow.loadFile(__dirname + `/views/message-in.html`);
+    messageInWindow.loadFile(path.join(__dirname + `/views/message-in.html`));
     messageInWindow.once("ready-to-show", () => {
         messageInWindow.show();
     });
@@ -182,7 +182,7 @@ function minimizeAllWindows() {
         tray.displayBalloon({
             title: 'Lands-Co',
             content: "Ok, I'm Here.",
-            icon: __dirname + '/assets/lands-co.ico',
+            icon: path.join(__dirname + '/assets/lands-co.ico'),
         });
         firstMini = false;
     }
@@ -198,7 +198,7 @@ function minimizeAllWindows() {
 
 function maximizeAllWindows() {
     if (mainWindow != null && !mainWindow.isVisible()) {
-        mainWindow.loadFile(__dirname + "/views/index.html");
+        mainWindow.loadFile(path.join(__dirname + "/views/index.html"));
         mainWindow.show();
     }
     if (aboutWindow != null && !aboutWindow.isVisible())
@@ -232,7 +232,7 @@ ipcMain.on("close-app", (event, arg) => {
     app.exit(0);
 });
 ipcMain.on("re-render-main", (event, arg) => {
-    mainWindow.loadFile(__dirname + "/views/index.html");
+    mainWindow.loadFile(path.join(__dirname + "/views/index.html"));
 });
 const gotTheLock = app.requestSingleInstanceLock();
 if (!gotTheLock) {
@@ -241,14 +241,15 @@ if (!gotTheLock) {
     app.on('second-instance', (event, commandLine, workingDirectory) => {
         if (mainWindow) {
             if (mainWindow.isMinimized()) mainWindow.restore();
+            if (!mainWindow.isVisible()) maximizeAllWindows();
             mainWindow.focus();
-            mainWindow.loadFile(__dirname + "/views/index.html");
+            mainWindow.loadFile(path.join(__dirname + "/views/index.html"));
         }
     });
     app.whenReady().then(() => {
         appDir = !app.isPackaged ? path.resolve('./') : path.dirname(process.execPath);
         display = screen.getPrimaryDisplay();
-        tray = new Tray(__dirname + '/assets/lands-co.ico');
+        tray = new Tray(path.join(__dirname + '/assets/lands-co.ico'));
         globalShortcut.register('CommandOrControl+M', () => {
             const configData = fse.readJsonSync(appDir + '/config/config.json');
             if (configData.allowedDevices.indexOf(os.hostname()) >= 0) {
