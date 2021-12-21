@@ -20,7 +20,7 @@ ipcRenderer.on('notify-args', (event, args) => {
                                                                                 <h6 class="dm-h fs-14 text-center flex-grow-1">${args.message}</h6>
                                                                                 <hr class="hr-awesome">
                                                                                 <div class="row">
-                                                                                    <h6 class="col dm-h fs-14 text-right">${args.date}</h6>
+                                                                                    <h6 class="col dm-h fs-14 text-right direction-ltr">${args.date}</h6>
                                                                                     <h6 class="col dm-h fs-14">${args.senderPc}</h6>
                                                                                 </div>
                                                                             </div>`;

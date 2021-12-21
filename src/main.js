@@ -1,10 +1,12 @@
-const {app, BrowserWindow, ipcMain, Tray, Menu, screen, dialog, globalShortcut} = require('electron');
+const remoteMain = require('@electron/remote/main');
+const {app, ipcMain,ipcRenderer,BrowserWindow, Tray, Menu, screen, dialog, globalShortcut} = require('electron');
+remoteMain.initialize();
 const AutoLaunch = require('auto-launch');
 const path = require('path');
 const os = require('os');
 const fse = require('fs-extra');
 let appDir;
-// require('electron-reload')(__dirname);
+require('electron-reload')(__dirname);
 let mainWindow;
 let aboutWindow;
 let detailWindow;
@@ -28,11 +30,11 @@ function createMainWindow() {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            enableRemoteModule: true,
             devTools: true,
         }
     });
     mainWindow.loadFile(path.join(__dirname + "/views/index.html"));
+    remoteMain.enable(mainWindow.webContents);
     mainWindow.once("ready-to-show", () => {
         mainWindow.show();
     });
@@ -74,11 +76,11 @@ function createAboutWindow() {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            enableRemoteModule: true,
             devTools: true,
         },
     });
     aboutWindow.loadFile(path.join(__dirname + "/views/about.html"));
+    remoteMain.enable(aboutWindow.webContents);
     aboutWindow.once("ready-to-show", () => {
         aboutWindow.show();
     });
@@ -102,12 +104,11 @@ function createDetailWindow(screen) {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            enableRemoteModule: true,
             devTools: true,
         },
     });
     detailWindow.loadFile(path.join(__dirname + `/views/${screen}.html`));
-
+    remoteMain.enable(detailWindow.webContents);
     detailWindow.once("ready-to-show", () => {
         detailWindow.show();
     });
@@ -134,11 +135,11 @@ function createNotifyWindow(args) {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            enableRemoteModule: true,
             devTools: true,
         },
     });
     notifyWindow.loadFile(path.join(__dirname + `/views/notify.html`));
+    remoteMain.enable(notifyWindow.webContents);
     notifyWindow.once("ready-to-show", () => {
         notifyWindow.show();
         notifyWindow.webContents.send('notify-args', args);
@@ -163,11 +164,11 @@ function createMessageInWindow() {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            enableRemoteModule: true,
             devTools: true,
         },
     });
     messageInWindow.loadFile(path.join(__dirname + `/views/message-in.html`));
+    remoteMain.enable(messageInWindow.webContents);
     messageInWindow.once("ready-to-show", () => {
         messageInWindow.show();
     });
@@ -198,7 +199,8 @@ function minimizeAllWindows() {
 
 function maximizeAllWindows() {
     if (mainWindow != null && !mainWindow.isVisible()) {
-        mainWindow.loadFile(path.join(__dirname + "/views/index.html"));
+        // mainWindow.loadFile(path.join(__dirname + "/views/index.html"));
+        mainWindow.webContents.send('checkLastUpdate');
         mainWindow.show();
     }
     if (aboutWindow != null && !aboutWindow.isVisible())
@@ -208,7 +210,6 @@ function maximizeAllWindows() {
     if (messageInWindow != null && !messageInWindow.isVisible())
         messageInWindow.show();
 }
-
 ipcMain.on('minimize-main-window', (event, arg) => {
     mainWindow.minimize();
 });
@@ -234,18 +235,18 @@ ipcMain.on("close-app", (event, arg) => {
 ipcMain.on("re-render-main", (event, arg) => {
     mainWindow.loadFile(path.join(__dirname + "/views/index.html"));
 });
-const gotTheLock = app.requestSingleInstanceLock();
-if (!gotTheLock) {
-    app.quit();
+// const gotTheLock = app.requestSingleInstanceLock();
+if (!1) {
+    // app.quit();
 } else {
-    app.on('second-instance', (event, commandLine, workingDirectory) => {
-        if (mainWindow) {
-            if (mainWindow.isMinimized()) mainWindow.restore();
-            if (!mainWindow.isVisible()) maximizeAllWindows();
-            mainWindow.focus();
-            mainWindow.loadFile(path.join(__dirname + "/views/index.html"));
-        }
-    });
+    // app.on('second-instance', (event, commandLine, workingDirectory) => {
+    //     if (mainWindow) {
+    //         if (mainWindow.isMinimized()) mainWindow.restore();
+    //         if (!mainWindow.isVisible()) maximizeAllWindows();
+    //         mainWindow.focus();
+    //         mainWindow.loadFile(path.join(__dirname + "/views/index.html"));
+    //     }
+    // });
     app.whenReady().then(() => {
         appDir = !app.isPackaged ? path.resolve('./') : path.dirname(process.execPath);
         display = screen.getPrimaryDisplay();

@@ -1,7 +1,9 @@
 {
   "closeApp": 0,
+  "testAzan": 0,
   "allowedDevices": [
     "lap",
-    "takh_admin"
+    "takh_admin",
+    "pc-net"
   ]
 }

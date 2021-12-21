@@ -1,27 +1,33 @@
 const os = require('os');
 const $ = require('jquery');
+const ioClient = require("socket.io-client");
 const data = fse.readJsonSync(appDir + '/config/devices.json');
 
 function closeWindow() {
     remote.getCurrentWindow().close();
 }
 
+console.log("sendMessage");
+
 function sendMessage() {
     try {
-        const pc = document.getElementById('computer').value;
-        const name = document.getElementById('username').value;
-        const msg = document.getElementById('msg').value;
+        const pc = document.getElementById('computer').value.trim();
+        const name = document.getElementById('username').value.trim();
+        const msg = document.getElementById('msg').value.trim();
         if (pc.length && msg.length && name.length) {
             saveDevice(name, pc);
-            fse.writeJsonSync(appDir + '/message/message.json', {
-                receiverPc: pc,
-                receiverName: name,
+            const socket = ioClient(`http://${pc}:30000`);
+            socket.emit("message", {
                 senderName: getNameFromPc(os.hostname()),
                 senderPc: os.hostname(),
                 date: moment().format('DD-MM-YYYY hh:mm A'),
-                message: msg,
+                message: msg
             });
-            closeWindow();
+            socket.on("received", data => {
+                console.log("received");
+                socket.disconnect();
+                closeWindow();
+            });
         }
     } catch (e) {
         console.log(e);
