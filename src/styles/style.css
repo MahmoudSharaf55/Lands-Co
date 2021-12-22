@@ -92,10 +92,10 @@ body {
 }
 
 .notify-window {
-    width: 300px;
-    height: 150px;
+    width: 320px;
+    height: 180px;
     background: url("../assets/islamic-bg.jpg") no-repeat center center;
-    background-size: 300px 150px;
+    background-size: 320px 180px;
 }
 
 .message-in-window {
@@ -933,4 +933,22 @@ input.autocomplete-input + div.autocomplete-list span:hover {
 
 #azkar-content::-webkit-scrollbar {
     width: 0;
+}
+
+.message-content{
+    overflow: scroll;
+    -webkit-app-region: none;
+    overflow-x: hidden;
+}
+.message-content::-webkit-scrollbar {
+    width: 0.25em;
+}
+
+.message-content::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.message-content::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    border-radius: 100px;
 }

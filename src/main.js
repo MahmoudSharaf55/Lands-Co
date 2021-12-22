@@ -120,10 +120,10 @@ function createDetailWindow(screen) {
 
 function createNotifyWindow(args) {
     notifyWindow = new BrowserWindow({
-        width: 300,
-        height: 150,
-        x: display.bounds.width - 300,
-        y: display.bounds.height - 190,
+        width: 320,
+        height: 180,
+        x: display.bounds.width - 320,
+        y: display.bounds.height - 220,
         autoHideMenuBar: true,
         roundedCorners: true,
         resizable: false,
