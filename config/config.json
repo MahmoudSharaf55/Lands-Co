@@ -1,9 +1,10 @@
 {
   "closeApp": 0,
-  "testAzan": 0,
+  "srcTestAzan": "C:\\Users\\Sharaf\\WebstormProjects\\Lands-Co\\sounds\\azan.mp3",
   "allowedDevices": [
     "lap",
     "takh_admin",
-    "pc-net"
+    "pc-net",
+    "Ma7MOoOD"
   ]
 }

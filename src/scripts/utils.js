@@ -137,19 +137,29 @@ function dataExists() {
     return fse.pathExistsSync(appDir + '/data');
 }
 
+ipcRenderer.on('testAzan', () => {
+    const data = fse.readJsonSync(appDir + '/config/config.json');
+    try {
+        const player = new Audio(data.srcTestAzan);
+        player.play();
+    } catch (e){
+        writeLog('error on test azan ' + e);
+    }
+});
 ipcRenderer.on('checkLastUpdate', () => {
     try {
         let lastUpdateDate = localStorage.getItem('last-update');
         let dataUpdateDate = getLastModifiedDateOfData();
+        console.log("stored last update " + moment(+lastUpdateDate).format());
+        console.log("files last update " + moment(dataUpdateDate).format());
         if (lastUpdateDate == null || +lastUpdateDate < dataUpdateDate.valueOf()) {
+            console.log('rerender')
             ipcRenderer.send('re-render-main');
-            localStorage.setItem('last-update', moment().valueOf().toString());
+            localStorage.setItem('last-update', moment(dataUpdateDate).add({second: 5}).valueOf().toString());
         }
         const data = fse.readJsonSync(appDir + '/config/config.json');
         if (+data.closeApp === 1)
             ipcRenderer.send('close-app');
-        if (+data.testAzan === 1)
-            ipcRenderer.send('open-notify-window', {notifyType: 'azan'});
     } catch (e) {
         writeLog('check update error ' + e);
     }

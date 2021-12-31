@@ -7,8 +7,6 @@ function closeWindow() {
     remote.getCurrentWindow().close();
 }
 
-console.log("sendMessage");
-
 function sendMessage() {
     try {
         const pc = document.getElementById('computer').value.trim();
@@ -20,8 +18,11 @@ function sendMessage() {
             socket.emit("message", {
                 senderName: getNameFromPc(os.hostname()),
                 senderPc: os.hostname(),
+                receiverName: name,
+                receiverPc: pc,
                 date: moment().format('DD-MM-YYYY hh:mm A'),
-                message: msg
+                message: msg,
+                withReply: true,
             });
             socket.on("received", data => {
                 console.log("received");

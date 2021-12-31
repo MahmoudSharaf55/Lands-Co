@@ -1,5 +1,5 @@
 const remoteMain = require('@electron/remote/main');
-const {app, ipcMain,ipcRenderer,BrowserWindow, Tray, Menu, screen, dialog, globalShortcut} = require('electron');
+const {app, ipcMain, ipcRenderer, BrowserWindow, Tray, Menu, screen, dialog, globalShortcut} = require('electron');
 remoteMain.initialize();
 const AutoLaunch = require('auto-launch');
 const path = require('path');
@@ -193,8 +193,6 @@ function minimizeAllWindows() {
         aboutWindow.hide();
     if (detailWindow != null && detailWindow.isVisible())
         detailWindow.hide();
-    if (messageInWindow != null && messageInWindow.isVisible())
-        messageInWindow.hide();
 }
 
 function maximizeAllWindows() {
@@ -210,6 +208,7 @@ function maximizeAllWindows() {
     if (messageInWindow != null && !messageInWindow.isVisible())
         messageInWindow.show();
 }
+
 ipcMain.on('minimize-main-window', (event, arg) => {
     mainWindow.minimize();
 });
@@ -260,6 +259,9 @@ if (!1) {
                 } else
                     createMessageInWindow();
             }
+        });
+        globalShortcut.register('CommandOrControl+T', () => {
+            mainWindow.webContents.send('testAzan');
         });
         const contextMenu = Menu.buildFromTemplate([
             {label: 'تكبير', type: 'normal', click: () => maximizeAllWindows()},
