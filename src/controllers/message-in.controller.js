@@ -25,7 +25,6 @@ function sendMessage() {
                 withReply: true,
             });
             socket.on("received", data => {
-                console.log("received");
                 socket.disconnect();
                 closeWindow();
             });

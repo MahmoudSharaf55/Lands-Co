@@ -1,7 +1,6 @@
 const {Rive} = require('rive-js');
 const $ = require('jquery');
 const schedule = require('node-schedule');
-const os = require('os');
 
 const rive = new Rive({
     src: '../assets/mosque.riv',
@@ -23,12 +22,13 @@ const rive1 = new Rive({
 });
 
 (() => {
+    const data = fse.readJsonSync(appDir + '/config/config.json');
     if (dataExists()) {
-        renderCorona();
-        renderWeather();
-        renderCurrency();
-        renderPrayer();
-        renderFootball();
+        +data.coronaTab ? renderCorona() : $('#corona-tab').remove();
+        +data.weatherTab ? renderWeather() : $('#weather-tab').remove();
+        +data.currencyTab ? renderCurrency() : $('#currency-tab').remove();
+        +data.prayerTab ? renderPrayer() : $('#prayer-tab').remove();
+        +data.footballTab ? renderFootball() : $('#football-tab').remove();
         renderLastUpdateDate();
     } else {
         showSnackbarWithType('مجلد البيانات غير موجود', SnackbarType.WRONG);
@@ -204,9 +204,6 @@ io.on('connection', (socket) => {
         socket.on("message", (data) => {
             ipcRenderer.send('open-notify-window', {notifyType: 'message', ...data});
             socket.emit('received');
-        });
-        socket.on("disconnect", () => {
-            console.log('server disconnect');
         });
     } catch (e) {
         writeLog('server socket connection error ' + e);

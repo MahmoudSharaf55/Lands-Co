@@ -6,7 +6,7 @@ const path = require('path');
 const os = require('os');
 const fse = require('fs-extra');
 let appDir;
-require('electron-reload')(__dirname);
+// require('electron-reload')(__dirname);
 let mainWindow;
 let aboutWindow;
 let detailWindow;
@@ -193,7 +193,6 @@ function minimizeAllWindows() {
 
 function maximizeAllWindows() {
     if (mainWindow != null && !mainWindow.isVisible()) {
-        // mainWindow.loadFile(path.join(__dirname + "/views/index.html"));
         mainWindow.webContents.send('checkLastUpdate');
         mainWindow.show();
     }
@@ -230,18 +229,18 @@ ipcMain.on("close-app", (event, arg) => {
 ipcMain.on("re-render-main", (event, arg) => {
     mainWindow.loadFile(path.join(__dirname + "/views/index.html"));
 });
-// const gotTheLock = app.requestSingleInstanceLock();
-if (!1) {
-    // app.quit();
+const gotTheLock = app.requestSingleInstanceLock();
+if (!gotTheLock) {
+    app.quit();
 } else {
-    // app.on('second-instance', (event, commandLine, workingDirectory) => {
-    //     if (mainWindow) {
-    //         if (mainWindow.isMinimized()) mainWindow.restore();
-    //         if (!mainWindow.isVisible()) maximizeAllWindows();
-    //         mainWindow.focus();
-    //         mainWindow.loadFile(path.join(__dirname + "/views/index.html"));
-    //     }
-    // });
+    app.on('second-instance', (event, commandLine, workingDirectory) => {
+        if (mainWindow) {
+            if (mainWindow.isMinimized()) mainWindow.restore();
+            if (!mainWindow.isVisible()) maximizeAllWindows();
+            mainWindow.focus();
+            mainWindow.loadFile(path.join(__dirname + "/views/index.html"));
+        }
+    });
     app.whenReady().then(() => {
         appDir = !app.isPackaged ? path.resolve('./') : path.dirname(process.execPath);
         display = screen.getPrimaryDisplay();
@@ -255,9 +254,6 @@ if (!1) {
                 } else
                     createMessageInWindow();
             }
-        });
-        globalShortcut.register('CommandOrControl+T', () => {
-            mainWindow.webContents.send('testAzan');
         });
         const contextMenu = Menu.buildFromTemplate([
             {label: 'تكبير', type: 'normal', click: () => maximizeAllWindows()},

@@ -44,7 +44,7 @@
         <h6 class="date mt-1 direction-rtl" id="last-update-date">أخر تحديث: 30 / 7 / 2021</h6>
     </div>
     <div class="row mt-1 mx-1 mb-2 direction-ltr flex-grow-1">
-        <div class="col card-awesome card-darken d-flex flex-column">
+        <div class="col card-awesome card-darken d-flex flex-column" id="football-tab">
             <canvas id="football-riv" width="120" height="120" class="m-2 align-self-center"></canvas>
             <div class="card-awesome-content flex-grow-1 d-flex flex-column justify-content-between"
                  style="margin-top: 9px">
@@ -60,7 +60,7 @@
                 <button class="btn-shadow" onclick="showDetailScreen('football')">تفاصيل أكتر</button>
             </div>
         </div>
-        <div class="col card-awesome d-flex flex-column">
+        <div class="col card-awesome d-flex flex-column" id="corona-tab">
             <object data="../assets/corona.svg" type="image/svg+xml" width="120" height="120"
                     class="m-2 align-self-center"></object>
             <div class="card-awesome-content d-flex flex-column flex-grow-1"
@@ -91,7 +91,7 @@
                 <button class="btn-shadow" onclick="showDetailScreen('corona')">تفاصيل أكتر</button>
             </div>
         </div>
-        <div class="col card-awesome card-darken d-flex flex-column">
+        <div class="col card-awesome card-darken d-flex flex-column" id="currency-tab">
             <object data="../assets/currency.svg" type="image/svg+xml" width="120" height="120"
                     class="m-2 align-self-center"></object>
             <div class="card-awesome-content flex-grow-1 d-flex flex-column justify-content-between"
@@ -107,7 +107,7 @@
                 <button class="btn-shadow" onclick="noMoreData()">تفاصيل أكتر</button>
             </div>
         </div>
-        <div class="col card-awesome position-relative d-flex justify-content-center">
+        <div class="col card-awesome position-relative d-flex justify-content-center" id="weather-tab">
             <div class="icon sun-shower align-self-center">
                 <div class="cloud"></div>
                 <div class="sun">
@@ -151,7 +151,7 @@
                 <button class="btn-shadow" onclick="showDetailScreen('weather')">تفاصيل أكتر</button>
             </div>
         </div>
-        <div class="col card-awesome card-darken d-flex flex-column">
+        <div class="col card-awesome card-darken d-flex flex-column" id="prayer-tab">
             <canvas id="mosque-riv" width="120" height="120" class="m-2 align-self-center"></canvas>
             <div class="card-awesome-content flex-grow-1 d-flex flex-column justify-content-between"
                  style="margin-top: 9px">

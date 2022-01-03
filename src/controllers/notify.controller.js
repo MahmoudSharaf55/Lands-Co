@@ -11,11 +11,12 @@ ipcRenderer.on('notify-args', (event, args) => {
     try {
         switch (args.notifyType) {
             case "azan":
+                document.getElementById('notify-bg').classList.add('islamic-bg');
+                document.getElementById('notify-body').innerHTML = '<div class="d-flex flex-grow-1 justify-content-center align-items-center h-100"><canvas id="text-riv"></canvas></div>';
                 runRive('../assets/azan.riv', '4s');
                 enableSound === '1' && playSound('/sounds/azan.mp3', true);
                 break;
             case "message":
-                document.getElementById('notify-bg').classList.add('notify-bg-dm');
                 document.getElementById('notify-body').innerHTML = `<div class="p-1 pt-2 d-flex flex-column h-100">
                                                                                 <h6 class="dm-h fs-15 text-center">رسالة جديدة من ${args.senderName}</h6>
                                                                                 <hr class="hr-awesome">
@@ -53,7 +54,7 @@ ipcRenderer.on('notify-args', (event, args) => {
                         }
                     }
                 });
-                enableSound === '1' && setTimeout(() => playSound('/sounds/notify.mp3', false), 10);
+                enableSound === '1' && playSound('/sounds/notify.mp3', false);
                 break;
         }
     } catch (e) {
@@ -74,9 +75,13 @@ function runRive(src, animation) {
 }
 
 function playSound(src, closeAfter) {
-    const exePath = appDir + '/exec/cmdmp3win.exe';
-    const soundPath = appDir + src;
-    exec(`${exePath} "${soundPath}"`, (error, stdout, stderr) => {
+    try {
+        const exePath = appDir + '/exec/cmdmp3win.exe';
+        const soundPath = appDir + src;
+        exec(`${exePath} "${soundPath}"`, (error, stdout, stderr) => {
+            closeAfter && closeNotifyWindow();
+        });
+    } catch (e){
         closeAfter && closeNotifyWindow();
-    });
+    }
 }

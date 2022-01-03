@@ -144,10 +144,7 @@ ipcRenderer.on('checkLastUpdate', () => {
     try {
         let lastUpdateDate = localStorage.getItem('last-update');
         let dataUpdateDate = getLastModifiedDateOfData();
-        console.log("stored last update " + moment(+lastUpdateDate).format());
-        console.log("files last update " + moment(dataUpdateDate).format());
         if (lastUpdateDate == null || +lastUpdateDate < dataUpdateDate.valueOf()) {
-            console.log('rerender')
             ipcRenderer.send('re-render-main');
             localStorage.setItem('last-update', moment(dataUpdateDate).add({second: 5}).valueOf().toString());
         }
