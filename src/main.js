@@ -1,5 +1,5 @@
+const {app, ipcMain, BrowserWindow, Tray, Menu, screen, dialog, globalShortcut} = require('electron');
 const remoteMain = require('@electron/remote/main');
-const {app, ipcMain, ipcRenderer, BrowserWindow, Tray, Menu, screen, dialog, globalShortcut} = require('electron');
 remoteMain.initialize();
 const AutoLaunch = require('auto-launch');
 const path = require('path');
@@ -143,10 +143,6 @@ function createNotifyWindow(args) {
     notifyWindow.once("ready-to-show", () => {
         notifyWindow.show();
         notifyWindow.webContents.send('notify-args', args);
-    });
-    notifyWindow.on('close', () => {
-        notifyWindow.destroy();
-        notifyWindow = null;
     });
 }
 

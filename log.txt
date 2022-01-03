@@ -1,0 +1,2 @@
+-------------- 03/01/2022 12:16 PM --------------
+SyntaxError: C:\Users\PC\WebstormProjects\Lands-Co/data/weather.json: Unexpected token I in JSON at position 0

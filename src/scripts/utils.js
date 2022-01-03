@@ -138,13 +138,7 @@ function dataExists() {
 }
 
 ipcRenderer.on('testAzan', () => {
-    const data = fse.readJsonSync(appDir + '/config/config.json');
-    try {
-        const player = new Audio(data.srcTestAzan);
-        player.play();
-    } catch (e){
-        writeLog('error on test azan ' + e);
-    }
+    ipcRenderer.send('open-notify-window', {notifyType: 'azan'});
 });
 ipcRenderer.on('checkLastUpdate', () => {
     try {

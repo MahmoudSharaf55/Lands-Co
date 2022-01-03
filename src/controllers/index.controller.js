@@ -1,7 +1,6 @@
 const {Rive} = require('rive-js');
 const $ = require('jquery');
 const schedule = require('node-schedule');
-const chokidar = require('chokidar');
 const os = require('os');
 
 const rive = new Rive({

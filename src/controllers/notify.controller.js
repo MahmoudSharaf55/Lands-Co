@@ -7,18 +7,14 @@ function closeNotifyWindow() {
     remote.getCurrentWindow().close();
 }
 
-let receiverName = '';
-let receiverPc = '';
 ipcRenderer.on('notify-args', (event, args) => {
     try {
         switch (args.notifyType) {
             case "azan":
                 runRive('../assets/azan.riv', '4s');
-                enableSound === '1' && playSound('/sounds/azan.mp3');
+                enableSound === '1' && playSound('/sounds/azan.mp3', true);
                 break;
             case "message":
-                receiverName = args.receiverName;
-                receiverPc = args.receiverPc;
                 document.getElementById('notify-bg').classList.add('notify-bg-dm');
                 document.getElementById('notify-body').innerHTML = `<div class="p-1 pt-2 d-flex flex-column h-100">
                                                                                 <h6 class="dm-h fs-15 text-center">رسالة جديدة من ${args.senderName}</h6>
@@ -36,16 +32,17 @@ ipcRenderer.on('notify-args', (event, args) => {
                         const replyInput = document.getElementById('reply-msg');
                         if (replyInput && replyInput.value.trim()) {
                             try {
-                                const socket = ioClient(`http://${receiverPc}:30000`);
+                                const socket = ioClient(`http://${args.senderPc}:30000`);
                                 socket.emit("message", {
-                                    senderName: receiverName,
-                                    senderPc: receiverPc,
+                                    senderName: args.receiverName,
+                                    senderPc: args.receiverPc,
+                                    receiverName: args.senderName,
+                                    receiverPc: args.senderPc,
                                     date: moment().format('DD-MM-YYYY hh:mm A'),
                                     message: replyInput.value,
                                     withReply: false,
                                 });
                                 socket.on("received", data => {
-                                    console.log("received");
                                     socket.disconnect();
                                     closeNotifyWindow();
                                 });
@@ -56,6 +53,7 @@ ipcRenderer.on('notify-args', (event, args) => {
                         }
                     }
                 });
+                enableSound === '1' && setTimeout(() => playSound('/sounds/notify.mp3', false), 10);
                 break;
         }
     } catch (e) {
@@ -75,10 +73,10 @@ function runRive(src, animation) {
     });
 }
 
-function playSound(src) {
-    const exePath = appDir + '/exec/bg-sound.exe';
+function playSound(src, closeAfter) {
+    const exePath = appDir + '/exec/cmdmp3win.exe';
     const soundPath = appDir + src;
     exec(`${exePath} "${soundPath}"`, (error, stdout, stderr) => {
-        closeNotifyWindow();
+        closeAfter && closeNotifyWindow();
     });
 }
