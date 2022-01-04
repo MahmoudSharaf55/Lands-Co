@@ -30,7 +30,6 @@ function createMainWindow() {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            devTools: false,
         }
     });
     mainWindow.loadFile(path.join(__dirname + "/views/index.html"));
@@ -76,7 +75,6 @@ function createAboutWindow() {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            devTools: false,
         },
     });
     aboutWindow.loadFile(path.join(__dirname + "/views/about.html"));
@@ -104,7 +102,6 @@ function createDetailWindow(screen) {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            devTools: false,
         },
     });
     detailWindow.loadFile(path.join(__dirname + `/views/${screen}.html`));
@@ -135,7 +132,6 @@ function createNotifyWindow(args) {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            devTools: false,
         },
     });
     notifyWindow.loadFile(path.join(__dirname + `/views/notify.html`));
@@ -160,7 +156,6 @@ function createMessageInWindow() {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            devTools: false,
         },
     });
     messageInWindow.loadFile(path.join(__dirname + `/views/message-in.html`));

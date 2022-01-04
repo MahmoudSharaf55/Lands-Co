@@ -33,7 +33,7 @@ ipcRenderer.on('notify-args', (event, args) => {
                         const replyInput = document.getElementById('reply-msg');
                         if (replyInput && replyInput.value.trim()) {
                             try {
-                                const socket = ioClient(`http://${args.senderPc}:30000`);
+                                const socket = ioClient(`http://${args.senderPc}:5001`);
                                 socket.emit("message", {
                                     senderName: args.receiverName,
                                     senderPc: args.receiverPc,

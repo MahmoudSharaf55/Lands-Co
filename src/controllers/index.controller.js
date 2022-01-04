@@ -198,15 +198,15 @@ function createScheduleJob(hour, min) {
     }
 }
 
-const io = require('socket.io')();
-io.on('connection', (socket) => {
-    try {
+try {
+    const io = require('socket.io')();
+    io.on('connection', (socket) => {
         socket.on("message", (data) => {
             ipcRenderer.send('open-notify-window', {notifyType: 'message', ...data});
             socket.emit('received');
         });
-    } catch (e) {
-        writeLog('server socket connection error ' + e);
-    }
-});
-io.listen(30000);
+    });
+    io.listen(5001);
+} catch (e) {
+    writeLog('server socket connection error ' + e);
+}

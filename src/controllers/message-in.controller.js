@@ -14,7 +14,7 @@ function sendMessage() {
         const msg = document.getElementById('msg').value.trim();
         if (pc.length && msg.length && name.length) {
             saveDevice(name, pc);
-            const socket = ioClient(`http://${pc}:30000`);
+            const socket = ioClient(`http://${pc}:5001`);
             socket.emit("message", {
                 senderName: getNameFromPc(os.hostname()),
                 senderPc: os.hostname(),
