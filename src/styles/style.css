@@ -92,19 +92,64 @@ body {
 }
 
 .notify-window {
-    width: 300px;
-    height: 150px;
-    background: url("../assets/islamic-bg.jpg") no-repeat center center;
-    background-size: 300px 150px;
+    width: 320px;
+    height: 180px;
+    background: var(--background);
 }
+
+.islamic-bg {
+    background: url("../assets/islamic-bg.jpg") no-repeat center center;
+    background-size: 320px 180px;
+}
+
+.spinner {
+    text-align: center;
+}
+
+.spinner > div {
+    width: 10px;
+    height: 10px;
+    background-color: var(--foreground);
+    border-radius: 100%;
+    display: inline-block;
+    -webkit-animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+    animation: sk-bouncedelay 1.4s infinite ease-in-out both;
+}
+
+.spinner .bounce1 {
+    -webkit-animation-delay: -0.32s;
+    animation-delay: -0.32s;
+}
+
+.spinner .bounce2 {
+    -webkit-animation-delay: -0.16s;
+    animation-delay: -0.16s;
+}
+
+@-webkit-keyframes sk-bouncedelay {
+    0%, 80%, 100% {
+        -webkit-transform: scale(0)
+    }
+    40% {
+        -webkit-transform: scale(1.0)
+    }
+}
+
+@keyframes sk-bouncedelay {
+    0%, 80%, 100% {
+        -webkit-transform: scale(0);
+        transform: scale(0);
+    }
+    40% {
+        -webkit-transform: scale(1.0);
+        transform: scale(1.0);
+    }
+}
+
 
 .message-in-window {
     width: 400px;
     height: 200px;
-}
-
-.notify-bg-dm {
-    background: var(--background);
 }
 
 .detail-window {
@@ -884,18 +929,21 @@ input.autocomplete-input + div.autocomplete-list span:not(:last-child) {
 input.autocomplete-input + div.autocomplete-list span:hover {
     background: var(--clr-primary-light);
 }
-.no-drag{
+
+.no-drag {
     -webkit-app-region: no-drag;
 }
-.btn-triangle{
+
+.btn-triangle {
     position: relative;
     cursor: pointer;
     padding-right: 0;
 }
-.btn-triangle:before{
+
+.btn-triangle:before {
     visibility: hidden;
     opacity: 0;
-    content:"\A";
+    content: "\A";
     border-style: solid;
     border-width: 6px 11px 6px 0;
     border-color: transparent var(--clr-secondary) transparent transparent;
@@ -908,17 +956,20 @@ input.autocomplete-input + div.autocomplete-list span:hover {
     margin: auto;
     transition: all 0.5s ease-in-out;
 }
-.btn-triangle.active{
+
+.btn-triangle.active {
     color: var(--clr-secondary);
 }
-.btn-triangle.active:before{
+
+.btn-triangle.active:before {
     color: var(--clr-secondary);
     right: -20px;
     opacity: 1;
     visibility: visible;
     transition: all 0.5s ease-in-out;
 }
-.btn-triangle:hover:before{
+
+.btn-triangle:hover:before {
     right: -20px;
     opacity: 1;
     visibility: visible;
@@ -933,4 +984,23 @@ input.autocomplete-input + div.autocomplete-list span:hover {
 
 #azkar-content::-webkit-scrollbar {
     width: 0;
+}
+
+.message-content {
+    overflow: scroll;
+    -webkit-app-region: none;
+    overflow-x: hidden;
+}
+
+.message-content::-webkit-scrollbar {
+    width: 0.25em;
+}
+
+.message-content::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+.message-content::-webkit-scrollbar-thumb {
+    background-color: var(--clr-primary);
+    border-radius: 100px;
 }

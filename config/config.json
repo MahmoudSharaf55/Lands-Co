@@ -1,7 +1,16 @@
 {
   "closeApp": 0,
+  "footballTab": 1,
+  "coronaTab": 1,
+  "currencyTab": 1,
+  "weatherTab": 1,
+  "prayerTab": 1,
   "allowedDevices": [
     "lap",
-    "takh_admin"
+    "takh_admin",
+    "pc-net",
+    "Ma7MOoOD",
+    "scanner-pc",
+    "nozom-1"
   ]
 }

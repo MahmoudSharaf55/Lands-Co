@@ -1,4 +1,5 @@
-const {ipcRenderer, remote} = require('electron');
+const remote = require("@electron/remote");
+const {ipcRenderer} = require('electron');
 const fse = require('fs-extra');
 const moment = require('moment');
 const path = require('path');
@@ -119,7 +120,7 @@ function getLastModifiedDateOfData() {
             maxModifiedDate = date.mtime;
         }
     }
-    return moment(maxModifiedDate).format('DD / MM / YYYY');
+    return moment(maxModifiedDate);
 }
 
 function writeLog(text) {
@@ -135,3 +136,22 @@ function writeLog(text) {
 function dataExists() {
     return fse.pathExistsSync(appDir + '/data');
 }
+
+ipcRenderer.on('testAzan', () => {
+    ipcRenderer.send('open-notify-window', {notifyType: 'azan'});
+});
+ipcRenderer.on('checkLastUpdate', () => {
+    try {
+        let lastUpdateDate = localStorage.getItem('last-update');
+        let dataUpdateDate = getLastModifiedDateOfData();
+        if (lastUpdateDate == null || +lastUpdateDate < dataUpdateDate.valueOf()) {
+            ipcRenderer.send('re-render-main');
+            localStorage.setItem('last-update', moment(dataUpdateDate).add({second: 5}).valueOf().toString());
+        }
+        const data = fse.readJsonSync(appDir + '/config/config.json');
+        if (+data.closeApp === 1)
+            ipcRenderer.send('close-app');
+    } catch (e) {
+        writeLog('check update error ' + e);
+    }
+});

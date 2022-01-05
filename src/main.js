@@ -1,4 +1,6 @@
-const {app, BrowserWindow, ipcMain, Tray, Menu, screen, dialog, globalShortcut} = require('electron');
+const {app, ipcMain, BrowserWindow, Tray, Menu, screen, dialog, globalShortcut} = require('electron');
+const remoteMain = require('@electron/remote/main');
+remoteMain.initialize();
 const AutoLaunch = require('auto-launch');
 const path = require('path');
 const os = require('os');
@@ -28,11 +30,10 @@ function createMainWindow() {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            enableRemoteModule: true,
-            devTools: true,
         }
     });
     mainWindow.loadFile(path.join(__dirname + "/views/index.html"));
+    remoteMain.enable(mainWindow.webContents);
     mainWindow.once("ready-to-show", () => {
         mainWindow.show();
     });
@@ -74,11 +75,10 @@ function createAboutWindow() {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            enableRemoteModule: true,
-            devTools: true,
         },
     });
     aboutWindow.loadFile(path.join(__dirname + "/views/about.html"));
+    remoteMain.enable(aboutWindow.webContents);
     aboutWindow.once("ready-to-show", () => {
         aboutWindow.show();
     });
@@ -102,12 +102,10 @@ function createDetailWindow(screen) {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            enableRemoteModule: true,
-            devTools: true,
         },
     });
     detailWindow.loadFile(path.join(__dirname + `/views/${screen}.html`));
-
+    remoteMain.enable(detailWindow.webContents);
     detailWindow.once("ready-to-show", () => {
         detailWindow.show();
     });
@@ -119,10 +117,10 @@ function createDetailWindow(screen) {
 
 function createNotifyWindow(args) {
     notifyWindow = new BrowserWindow({
-        width: 300,
-        height: 150,
-        x: display.bounds.width - 300,
-        y: display.bounds.height - 190,
+        width: 320,
+        height: 180,
+        x: display.bounds.width - 320,
+        y: display.bounds.height - 220,
         autoHideMenuBar: true,
         roundedCorners: true,
         resizable: false,
@@ -134,18 +132,13 @@ function createNotifyWindow(args) {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            enableRemoteModule: true,
-            devTools: true,
         },
     });
     notifyWindow.loadFile(path.join(__dirname + `/views/notify.html`));
+    remoteMain.enable(notifyWindow.webContents);
     notifyWindow.once("ready-to-show", () => {
         notifyWindow.show();
         notifyWindow.webContents.send('notify-args', args);
-    });
-    notifyWindow.on('close', () => {
-        notifyWindow.destroy();
-        notifyWindow = null;
     });
 }
 
@@ -163,11 +156,10 @@ function createMessageInWindow() {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            enableRemoteModule: true,
-            devTools: true,
         },
     });
     messageInWindow.loadFile(path.join(__dirname + `/views/message-in.html`));
+    remoteMain.enable(messageInWindow.webContents);
     messageInWindow.once("ready-to-show", () => {
         messageInWindow.show();
     });
@@ -192,13 +184,11 @@ function minimizeAllWindows() {
         aboutWindow.hide();
     if (detailWindow != null && detailWindow.isVisible())
         detailWindow.hide();
-    if (messageInWindow != null && messageInWindow.isVisible())
-        messageInWindow.hide();
 }
 
 function maximizeAllWindows() {
     if (mainWindow != null && !mainWindow.isVisible()) {
-        mainWindow.loadFile(path.join(__dirname + "/views/index.html"));
+        mainWindow.webContents.send('checkLastUpdate');
         mainWindow.show();
     }
     if (aboutWindow != null && !aboutWindow.isVisible())

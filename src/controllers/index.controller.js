@@ -1,8 +1,6 @@
 const {Rive} = require('rive-js');
 const $ = require('jquery');
 const schedule = require('node-schedule');
-const chokidar = require('chokidar');
-const os = require('os');
 
 const rive = new Rive({
     src: '../assets/mosque.riv',
@@ -24,12 +22,13 @@ const rive1 = new Rive({
 });
 
 (() => {
+    const data = fse.readJsonSync(appDir + '/config/config.json');
     if (dataExists()) {
-        renderCorona();
-        renderWeather();
-        renderCurrency();
-        renderPrayer();
-        renderFootball();
+        +data.coronaTab ? renderCorona() : $('#corona-tab').remove();
+        +data.weatherTab ? renderWeather() : $('#weather-tab').remove();
+        +data.currencyTab ? renderCurrency() : $('#currency-tab').remove();
+        +data.prayerTab ? renderPrayer() : $('#prayer-tab').remove();
+        +data.footballTab ? renderFootball() : $('#football-tab').remove();
         renderLastUpdateDate();
     } else {
         showSnackbarWithType('مجلد البيانات غير موجود', SnackbarType.WRONG);
@@ -168,8 +167,9 @@ function renderFootball() {
         showSnackbarWithType('خطأ فى كتابة بيانات المباريات', SnackbarType.WRONG);
     }
 }
-function renderLastUpdateDate(){
-    $('#last-update-date').text(`أخر تحديث: ${getLastModifiedDateOfData()}`);
+
+function renderLastUpdateDate() {
+    $('#last-update-date').text(`أخر تحديث: ${getLastModifiedDateOfData().format('DD / MM / YYYY')}`);
 }
 
 function noMoreData() {
@@ -193,83 +193,20 @@ function createScheduleJob(hour, min) {
         schedule.scheduleJob(azanRule, function () {
             ipcRenderer.send('open-notify-window', {notifyType: 'azan'});
         });
-        const refreshRule = new schedule.RecurrenceRule();
-        refreshRule.dayOfWeek = [0, 1, 2, 3, 4, 5, 6];
-        refreshRule.hour = 21;
-        refreshRule.minute = 0;
-        schedule.scheduleJob(refreshRule, function () {
-            configActionOnWatching();
-            reloadMainWindow();
-        });
     } catch (e) {
         writeLog('cannot create schedule job ' + e);
     }
 }
 
-watchData();
-
-function watchData() {
-    try {
-        const watcher = chokidar.watch(appDir + '\\data', {
-            persistent: true,
-            awaitWriteFinish: true,
-            ignoreInitial: true,
-            usePolling: true,
+try {
+    const io = require('socket.io')();
+    io.on('connection', (socket) => {
+        socket.on("message", (data) => {
+            ipcRenderer.send('open-notify-window', {notifyType: 'message', ...data});
+            socket.emit('received');
         });
-        watcher
-            .on('add', path => reloadMainWindow())
-            .on('change', path => reloadMainWindow());
-    } catch (e) {
-        writeLog('data watcher error ' + e);
-    }
-}
-
-watchMessages();
-
-function watchMessages() {
-    try {
-        const watcher = chokidar.watch(appDir + '\\message\\message.json', {
-            persistent: true,
-            awaitWriteFinish: true,
-            ignoreInitial: true,
-            usePolling: true,
-        });
-        watcher
-            .on('add', path => openMessageWindow())
-            .on('change', path => openMessageWindow());
-    } catch (e) {
-        writeLog('message watcher error ' + e);
-    }
-}
-
-function openMessageWindow() {
-    const data = fse.readJsonSync(appDir + '/message/message.json');
-    console.log(data);
-    if (os.hostname() === data.receiverPc) {
-        ipcRenderer.send('open-notify-window', {notifyType: 'message', ...data});
-    }
-}
-
-watchConfig();
-
-function watchConfig() {
-    try {
-        const watcher = chokidar.watch(appDir + '\\config\\config.json', {
-            persistent: true,
-            awaitWriteFinish: true,
-            ignoreInitial: true,
-            usePolling: true,
-        });
-        watcher
-            .on('add', path => configActionOnWatching())
-            .on('change', path => configActionOnWatching());
-    } catch (e) {
-        writeLog('config watcher error ' + e);
-    }
-}
-
-function configActionOnWatching() {
-    const data = fse.readJsonSync(appDir + '/config/config.json');
-    if (data.closeApp == 1)
-        ipcRenderer.send('close-app');
+    });
+    io.listen(5001);
+} catch (e) {
+    writeLog('server socket connection error ' + e);
 }
