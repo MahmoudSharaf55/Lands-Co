@@ -824,6 +824,9 @@ input.form-control {
 .clr-primary {
     color: var(--clr-primary);
 }
+.clr-secondary {
+    color: var(--clr-secondary);
+}
 
 .lock-height {
     height: 265px;

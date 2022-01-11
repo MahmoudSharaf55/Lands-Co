@@ -18,14 +18,14 @@ ipcRenderer.on('notify-args', (event, args) => {
                 break;
             case "message":
                 document.getElementById('notify-body').innerHTML = `<div class="p-1 pt-2 d-flex flex-column h-100">
-                                                                                <h6 class="dm-h fs-15 text-center">رسالة جديدة من ${args.senderName}</h6>
+                                                                                <h6 class="dm-h fs-14 text-center clr-secondary">${args.withReply ? 'رسالة جديدة من' : 'رد من'} ${args.senderName}</h6>
                                                                                 <hr class="hr-awesome">
                                                                                 <h6 class="message-content dm-h fs-14 text-center flex-grow-1">${args.message}</h6>
                                                                                 <hr class="hr-awesome">
                                                                                 ${args.withReply ? '<input id="reply-msg" class="form-control dm-input direction-rtl px-2 py-1" type="text" placeholder="إرسال رد"><hr class="hr-awesome">' : ''}
                                                                                 <div class="row">
-                                                                                    <h6 class="col dm-h fs-14 text-right direction-ltr">${args.date}</h6>
-                                                                                    <h6 class="col dm-h fs-14">${args.senderPc}</h6>
+                                                                                    <h6 class="col dm-h fs-12 text-right direction-ltr clr-secondary">${args.date}</h6>
+                                                                                    <h6 class="col dm-h fs-12 clr-secondary">${args.senderPc}</h6>
                                                                                 </div>
                                                                             </div>`;
                 $("#reply-msg").keyup(function (event) {
@@ -54,7 +54,7 @@ ipcRenderer.on('notify-args', (event, args) => {
                         }
                     }
                 });
-                enableSound === '1' && playSound('/sounds/notify.mp3', false);
+                enableSound === '1' && playSound(args.withReply ? '/sounds/notification.mp3' : '/sounds/reply.mp3', false);
                 break;
         }
     } catch (e) {

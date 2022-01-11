@@ -1,1 +1,14 @@
-[{"name":"لاب","pc":"lap"},{"name":"جهاز الفلاشات","pc":"scanner-pc"},{"name":"جهاز النت","pc":"pc-net"},{"name":"نظم-1","pc":"nozom-1"},{"name":"محمود","pc":"Ma7MOoOD"}]
+[
+  {
+    "name": "لاب",
+    "pc": "lap"
+  },
+  {
+    "name": "جهاز الفلاشات",
+    "pc": "scanner-pc"
+  },
+  {
+    "name": "جهاز النت",
+    "pc": "pc-net"
+  }
+]
