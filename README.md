@@ -3,7 +3,7 @@
     <img src="src/assets/lands-co.png" alt="Logo" width=250 height=250>
   </a>
   <h3 align="center">Lands-Co</h3>
-  <h4 align="center">For Armed Forces Land Projects Authority</h4>
+  <h4 align="center">For Armed Forces Lands Projects Authority</h4>
   <p align="center">
     <strong>Lands-Co</strong> is an offline data viewer program that gets data from <a href="https://github.com/MahmoudSharaf55/Lands-Co-Collector" target="_blank">Lands-Co Collector</a>
   as JSON files and displays in an awsome way for users to find out the latest news in terms of weather conditions, 
