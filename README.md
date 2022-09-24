@@ -54,7 +54,7 @@
 | Light & Dark Mode |
 | Awesome user interface |
 
-## 🛠️ Supported Platforms
+## ✅ Supported Platforms
 
 ![](https://raw.githubusercontent.com/EgoistDeveloper/operating-system-logos/master/src/48x48/WIN.png "Windows")
 ![](https://raw.githubusercontent.com/EgoistDeveloper/operating-system-logos/master/src/48x48/LIN.png "Linux")
