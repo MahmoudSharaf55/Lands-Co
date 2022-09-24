@@ -54,6 +54,12 @@
 | Light & Dark Mode |
 | Awesome user interface |
 
+## 🛠️ Supported Platforms
+
+![](https://raw.githubusercontent.com/EgoistDeveloper/operating-system-logos/master/src/48x48/WIN.png "Windows")
+![](https://raw.githubusercontent.com/EgoistDeveloper/operating-system-logos/master/src/48x48/LIN.png "Linux")
+![](https://raw.githubusercontent.com/EgoistDeveloper/operating-system-logos/master/src/48x48/MAC.png "MAC")
+
 ## 🛠️ Technologies
 
 * Node.js 16.13.1
